@@ -1,0 +1,126 @@
+swagger: "2.0"
+info:
+  description: "This is a simple example for the Moosik project"
+  version: "1.0.0"
+  title: "Moosik"
+host: "TODO"
+basePath: "/TODO"
+tags:
+- name: "user"
+  description: "Operations to do with Users"
+- name: "thread"
+  description: "Operations to do with Threads"
+- name: "post"
+  description: "Operations to do with Posts"
+paths:
+  /user:
+    post:
+      tags:
+      - "user"
+      summary: "Add a new user to the system"
+      operationId: "addUser"
+      consumes:
+      - "application/json"
+      produces:
+      - "applcation/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "User object that needs to be added to the system"
+        required: true
+        schema:
+          $ref: "#/definitions/User"
+      responses:
+        "405":
+          description: "Invalid input"  
+  /post/{postId}:
+    delete:
+      tags: 
+      - "post"
+      summary: "Deletes a post"
+      operationId: "deletePost"
+      consumes:
+      - "application/json"
+      produces:
+      - "applcation/json"
+      parameters:
+      - name: "postId"
+        in: "path"
+        description: "Post id to delete"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "400":
+          description: "Invalid Id supplied"
+        "404":
+          description: "Post not found"  
+  /thread:
+    put:
+      tags:
+      - "thread"
+      summary: "Update an existing thread"
+      operationId: "updateThread"
+      consumes:
+      - "application/json"
+      produces:
+      - "applcation/json"    
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Thread that needs to be updated on the system"
+        required: true
+        schema:
+          $ref: "#/definitions/Thread"
+      responses:
+        "400":
+          description: "Invalid ID supplied"
+        "404":
+          description: "Thread not found"
+        "405":
+          description: "Validation exception"           
+definitions:
+  User:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      username:
+        type: "string"  
+      email:
+        type: "string" 
+  Thread:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      title:
+        type: "string"
+      thread_types_id:
+        type: "integer"
+        format: "int64"
+      user_id:
+        type: "integer"
+        format: "int64"
+      created_date:
+        type: "string"
+        format: "date-time"       
+  Post:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      description:
+        type: "string"
+      users_id:
+        type: "integer"
+        format: "int64"
+      threads_id:
+        type: "integer"
+        format: "int64"
+      created_date:
+        type: "string"
+        format: "date-time"
