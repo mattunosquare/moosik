@@ -1,0 +1,13 @@
+C:\Users\matt.mccleave\Documents\Github\moosik\Server\moosik.services\bin\Debug\netstandard2.0\moosik.services.deps.json
+C:\Users\matt.mccleave\Documents\Github\moosik\Server\moosik.services\bin\Debug\netstandard2.0\moosik.services.dll
+C:\Users\matt.mccleave\Documents\Github\moosik\Server\moosik.services\bin\Debug\netstandard2.0\moosik.services.pdb
+C:\Users\matt.mccleave\Documents\Github\moosik\Server\moosik.services\bin\Debug\netstandard2.0\moosik.dal.dll
+C:\Users\matt.mccleave\Documents\Github\moosik\Server\moosik.services\bin\Debug\netstandard2.0\moosik.dal.pdb
+C:\Users\matt.mccleave\Documents\Github\moosik\Server\moosik.services\obj\Debug\netstandard2.0\moosik.services.csproj.AssemblyReference.cache
+C:\Users\matt.mccleave\Documents\Github\moosik\Server\moosik.services\obj\Debug\netstandard2.0\moosik.services.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\matt.mccleave\Documents\Github\moosik\Server\moosik.services\obj\Debug\netstandard2.0\moosik.services.AssemblyInfoInputs.cache
+C:\Users\matt.mccleave\Documents\Github\moosik\Server\moosik.services\obj\Debug\netstandard2.0\moosik.services.AssemblyInfo.cs
+C:\Users\matt.mccleave\Documents\Github\moosik\Server\moosik.services\obj\Debug\netstandard2.0\moosik.services.csproj.CoreCompileInputs.cache
+C:\Users\matt.mccleave\Documents\Github\moosik\Server\moosik.services\obj\Debug\netstandard2.0\moosik.services.csproj.CopyComplete
+C:\Users\matt.mccleave\Documents\Github\moosik\Server\moosik.services\obj\Debug\netstandard2.0\moosik.services.dll
+C:\Users\matt.mccleave\Documents\Github\moosik\Server\moosik.services\obj\Debug\netstandard2.0\moosik.services.pdb

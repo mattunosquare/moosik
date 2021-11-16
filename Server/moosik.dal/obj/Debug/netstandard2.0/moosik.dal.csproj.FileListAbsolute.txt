@@ -1,0 +1,10 @@
+C:\Users\matt.mccleave\Documents\Github\moosik\Server\moosik.dal\bin\Debug\netstandard2.0\moosik.dal.deps.json
+C:\Users\matt.mccleave\Documents\Github\moosik\Server\moosik.dal\bin\Debug\netstandard2.0\moosik.dal.dll
+C:\Users\matt.mccleave\Documents\Github\moosik\Server\moosik.dal\bin\Debug\netstandard2.0\moosik.dal.pdb
+C:\Users\matt.mccleave\Documents\Github\moosik\Server\moosik.dal\obj\Debug\netstandard2.0\moosik.dal.csproj.AssemblyReference.cache
+C:\Users\matt.mccleave\Documents\Github\moosik\Server\moosik.dal\obj\Debug\netstandard2.0\moosik.dal.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\matt.mccleave\Documents\Github\moosik\Server\moosik.dal\obj\Debug\netstandard2.0\moosik.dal.AssemblyInfoInputs.cache
+C:\Users\matt.mccleave\Documents\Github\moosik\Server\moosik.dal\obj\Debug\netstandard2.0\moosik.dal.AssemblyInfo.cs
+C:\Users\matt.mccleave\Documents\Github\moosik\Server\moosik.dal\obj\Debug\netstandard2.0\moosik.dal.csproj.CoreCompileInputs.cache
+C:\Users\matt.mccleave\Documents\Github\moosik\Server\moosik.dal\obj\Debug\netstandard2.0\moosik.dal.dll
+C:\Users\matt.mccleave\Documents\Github\moosik\Server\moosik.dal\obj\Debug\netstandard2.0\moosik.dal.pdb
