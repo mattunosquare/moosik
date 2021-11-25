@@ -2,9 +2,8 @@
 
 namespace moosik.api.ViewModels;
 
-public class Thread
+public class ThreadViewModel
 {
-    [Required]
     public int Id { get; set; }
     
     public string Title { get; set; }
@@ -14,4 +13,6 @@ public class Thread
     public int UserId { get; set; }
     
     public DateTime CreatedDate { get; set; }
+    
+    public bool Active { get; set; }
 }

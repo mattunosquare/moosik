@@ -14,14 +14,16 @@ CREATE TABLE IF NOT EXISTS public.users
 (
     id  serial constraint user_pk primary key,
     username text,
-    email text
+    email text,
+    active boolean
 );
 
 CREATE TABLE IF NOT EXISTS public.threads
 (
     id  serial constraint thread_pk primary key,
     title text,
-    created_date timestamptz
+    created_date timestamp,
+    active boolean
 );
 
 ALTER TABLE public.threads ADD COLUMN thread_type_id INTEGER;
@@ -40,7 +42,8 @@ CREATE TABLE IF NOT EXISTS public.posts
 (
     id serial constraint post_pk primary key,
     description text,
-    created_date timestamptz
+    created_date timestamp,
+    active boolean
 );
 
 ALTER TABLE public.posts add column user_id INTEGER;

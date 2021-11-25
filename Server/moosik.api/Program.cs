@@ -1,13 +1,44 @@
+using System.Reflection;
+using System.Text.Json.Serialization;
+using FluentValidation.AspNetCore;
+using MicroElements.Swashbuckle.FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.OpenApi.Models;
+using moosik.api.ViewModels.Validators;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddJsonOptions(x=>x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
+builder.Services.AddFluentValidation(fv =>
+{
+    fv.RegisterValidatorsFromAssemblyContaining<CreateUserValidator>();
+    fv.DisableDataAnnotationsValidation = true;
+});
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options =>
+{
+    options.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Version = "v1",
+        Title = "Moosik API",
+        Description = "An ASP.NET Core Web API for managing Moosik items",
+    });
+    
+    var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
+    
+    
+});
+
+builder.Services.AddFluentValidationRulesToSwagger();
+
+
 
 var app = builder.Build();
+AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

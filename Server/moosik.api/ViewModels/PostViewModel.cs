@@ -1,10 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace moosik.api.ViewModels;
 
-public class Post
+public class PostViewModel
 {
-    [Required]
     public int Id { get; set; }   
     
     public string Description { get; set; }
@@ -14,4 +14,6 @@ public class Post
     public int ThreadId { get; set; }
     
     public DateTime CreatedDate { get; set; }
+    
+    public bool Active { get; set; }
 }

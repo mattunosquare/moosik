@@ -1,0 +1,260 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>moosik.api</name>
+    </assembly>
+    <members>
+        <member name="M:moosik.api.Controllers.PostController.GetPostById(System.Int32)">
+            <summary>
+            Finds the post matching a given PostId
+            </summary>
+            <param name="id" example = "2"></param>
+            <remarks>
+            Sample request:
+                URL: www.moosik.com/post/2
+            </remarks>
+            <returns>Post object matching the given id parameter</returns>
+            <response code="200">Success - Post has been successfully returned</response>
+            <response code="400">Bad Request - Check input values</response>
+            <response code="404">Not Found - Given Post does not exist</response>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="M:moosik.api.Controllers.PostController.GetPostsAfterDate(System.DateTime)">
+            <summary>
+            Returns all Post objects that occur after the provided date
+            </summary>
+            <param name="date" example="2008-10-31T17:04:32"></param>
+            <remarks>
+            Sample request:
+                URL: www.moosik.com/post?date=2008-10-31T17:04:32
+            </remarks>
+            <returns>List of Post objects containing all Posts that occur after a provided date</returns>
+            <response code="200">Success - List of Posts has been successfully returned</response>
+            <response code="400">Bad Request - Check input values</response>
+            <response code="404">Not Found - No such list exists</response>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="M:moosik.api.Controllers.PostController.UpdatePost(moosik.api.ViewModels.PostViewModel)">
+            <summary>
+            Updates the Post object matching the provided PostId of the request body object, returns the newly updated object
+            </summary>
+            <param name="postViewModelDto"></param>
+            <remarks>
+            Sample request:
+            
+                Body:
+                {
+                    id: 1,
+                    description: "Cool Song",
+                    userId: 4,
+                    threadId: 7,
+                    createdDate: "2008-10-31T17:04:32"
+                }
+            </remarks>
+            <returns>Post object if it has been updated, otherwise error code</returns>
+            <response code="200">Success - Post has been successfully updated</response>
+            <response code="400">Bad Request - Check input values</response>
+            <response code="404">Not Found - No such Post exists to update</response>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="M:moosik.api.Controllers.PostController.CreatePost(moosik.api.ViewModels.PostViewModel)">
+             <summary>
+             Creates a new Post using the provided Post object
+             </summary>
+             <remarks>
+             Sample request:
+            
+                 Body:
+                 {
+                     description: "Cool Song",
+                     userId: 4,
+                     threadId: 7,
+                     createdDate: "2008-10-31T17:04:32"
+                 }
+             </remarks>
+             <param name="postViewModel"></param>
+             <returns>Newly created Post provided it has been created, otherwise an error code</returns>
+             <response code="201">Success - Post has been successfully created</response>
+             <response code="400">Bad Request - Check input values</response>
+             <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="M:moosik.api.Controllers.PostController.DeletePost(System.Int32)">
+            <summary>
+            Deletes the Post matching the provided PostId
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="M:moosik.api.Controllers.PostController.GetAllResourceTypes">
+            <summary>
+            Get all ResourceTypes
+            </summary>
+            <returns>List of all ResourceTypes</returns>
+            <response code="200">Success - List of ResourceTypes successfully return</response>
+            <response code="404">Not Found - No such list exists</response>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="M:moosik.api.Controllers.ThreadController.GetThreadById(System.Int32)">
+            <summary>
+            Finds the Thread matching a given ThreadId
+            </summary>
+            <param name="id"></param>
+            <returns>Thread object matching the given id parameter</returns>
+            <response code="200">Success - Thread has been successfully returned</response>
+            <response code="400">Bad Request - Check input values</response>
+            <response code="404">Not Found - Given Post does not exist</response>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="M:moosik.api.Controllers.ThreadController.GetThreadsAfterDate(System.DateTime)">
+            <summary>
+            Returns all Thread objects that occur after the provided date
+            </summary>
+            <param name="date" example="2008-10-31T17:04:32"></param>
+            <remarks>
+            Sample request:
+                URL: www.moosik.com/thread?date=2008-10-31T17:04:32
+            </remarks>
+            <returns>List of Thread objects containing all Threads that occur after a provided date</returns>
+            <response code="200">Success - List of Threads has been successfully returned</response>
+            <response code="400">Bad Request - Check input values</response>
+            <response code="404">Not Found - No such list exists</response>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="M:moosik.api.Controllers.ThreadController.UpdateThread(moosik.api.ViewModels.ThreadViewModel)">
+             <summary>
+             Updates the Thread object matching the provided ThreadId of the request body object, returns the newly updated object
+             </summary>
+             <param name="threadViewModelDto"></param>-
+             <remarks>
+             Sample request:
+            
+                 Body:
+                 {
+                     id: 8,
+                     title: "Need a good song please",
+                     threadTypeId: 4,
+                     userId: 7,
+                     createdDate: "2008-10-31T17:04:32"
+                 }
+             </remarks>
+             <returns>Thread object if it has been updated, otherwise error code</returns>
+             <response code="200">Success - Thread has been successfully updated</response>
+             <response code="400">Bad Request - Check input values</response>
+             <response code="404">Not Found - No such Thread exists to update</response>
+             <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="M:moosik.api.Controllers.ThreadController.CreateThread(moosik.api.ViewModels.ThreadViewModel)">
+             <summary>
+             Creates a new Thread using the provided Thread object
+             </summary>
+             <remarks>
+             Sample request:
+            
+                 Body:
+                 {
+                     title: "Need song for gym please",
+                     threadTypeId: 8,
+                     userId: 10,
+                     createdDate: "2008-10-31T17:04:32"
+                 }
+             </remarks>
+             <param name="threadViewModelDto"></param>
+             <returns>Newly created Thread provided it has been created, otherwise an error code</returns>
+             <response code="201">Success - Post has been successfully created</response>
+             <response code="400">Bad Request - Check input values</response>
+             <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="M:moosik.api.Controllers.ThreadController.DeleteThreadById(System.Int32)">
+            <summary>
+            Deletes the Thread matching the provided ThreadId
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="M:moosik.api.Controllers.ThreadController.GetAllThreadTypes">
+            <summary>
+            Gets all ThreadTypes
+            </summary>
+            <returns>A list of all ThreadTypes within the system</returns>
+            <response code="200">Success - List of ThreadTypes successfully return</response>
+            <response code="404">Not Found - No such list exists</response>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="M:moosik.api.Controllers.UserController.GetUserById(System.Int32)">
+            <summary>
+            Finds the User matching a given UserId
+            </summary>
+            <param name="id"></param>
+            <returns>User object matching the given id parameter</returns>
+            <response code="200">Success - Thread has been successfully returned</response>
+            <response code="400">Bad Request - Check input values</response>
+            <response code="404">Not Found - Given Post does not exist</response>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="M:moosik.api.Controllers.UserController.GetUserByUsernameAndEmail(System.String,System.String)">
+            <summary>
+            Returns all User objects that matches the given parameters
+            </summary>
+            <param name="username" example="lennon_01"></param>
+            <param name="email" example="j_lennon@beatles.com"></param>
+            <remarks>Sample request:
+            URL: www.moosik.com/user?username=lennon_01email=j_lennon@beatles.com
+            </remarks>
+            <returns>User object matching the provided username and email address</returns>
+            <response code="200">Success - User has been successfully returned</response>
+            <response code="400">Bad Request - Check input values</response>
+            <response code="404">Not Found - No such user matches the provided arguments</response>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="M:moosik.api.Controllers.UserController.UpdateUser(moosik.api.ViewModels.UserViewModel)">
+            <summary>
+            Updates the User object matching the provided UserId of the request body object, returns the newly updated object
+            </summary>
+            <param name="userViewModelDto"></param>
+            <remarks>
+            Sample request:
+            
+                Body:
+                {
+                     id: 7,
+                     username: "ringo_01",
+                     email: "ringo_01@beatles.com"
+                }
+            </remarks>
+            <returns>User object if it has been updated, otherwise error code</returns>
+            <response code="200">Success - User has been successfully updated</response>
+            <response code="400">Bad Request - Check input values</response>
+            <response code="404">Not Found - No such User exists to update</response>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="M:moosik.api.Controllers.UserController.CreateUser(moosik.api.ViewModels.UserViewModel)">
+            <summary>
+            Creates a new User using the provided User object
+            </summary>
+            <remarks>
+            Sample request:
+            
+                Body:
+                {
+                    username: "mccartney_01",
+                    email: "mccartney_01@beatles.com"
+                }
+            </remarks>
+            <param name="userViewModelDto"></param>
+            <returns>Newly created User provided it has been created, otherwise an error code</returns>
+            <response code="201">Success - User has been successfully created</response>
+            <response code="400">Bad Request - Check input values</response>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="M:moosik.api.Controllers.UserController.DeleteUserById(System.Int32)">
+            <summary>
+            Deletes the User matching the provided UserId
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+    </members>
+</doc>

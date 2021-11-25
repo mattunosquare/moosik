@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\matt.mccleave\\Documents\\Github\\moosik\\Server\\moosik.services\\moosik.services.csproj": {}
+    "C:\\Users\\matt.mccleave\\Documents\\Github\\moosik\\server\\moosik.services\\moosik.services.csproj": {}
   },
   "projects": {
-    "C:\\Users\\matt.mccleave\\Documents\\Github\\moosik\\Server\\moosik.dal\\moosik.dal.csproj": {
+    "C:\\Users\\matt.mccleave\\Documents\\Github\\moosik\\server\\moosik.dal\\moosik.dal.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\matt.mccleave\\Documents\\Github\\moosik\\Server\\moosik.dal\\moosik.dal.csproj",
+        "projectUniqueName": "C:\\Users\\matt.mccleave\\Documents\\Github\\moosik\\server\\moosik.dal\\moosik.dal.csproj",
         "projectName": "moosik.dal",
-        "projectPath": "C:\\Users\\matt.mccleave\\Documents\\Github\\moosik\\Server\\moosik.dal\\moosik.dal.csproj",
+        "projectPath": "C:\\Users\\matt.mccleave\\Documents\\Github\\moosik\\server\\moosik.dal\\moosik.dal.csproj",
         "packagesPath": "C:\\Users\\matt.mccleave\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\matt.mccleave\\Documents\\Github\\moosik\\Server\\moosik.dal\\obj\\",
+        "outputPath": "C:\\Users\\matt.mccleave\\Documents\\Github\\moosik\\server\\moosik.dal\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\matt.mccleave\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -61,14 +61,14 @@
         }
       }
     },
-    "C:\\Users\\matt.mccleave\\Documents\\Github\\moosik\\Server\\moosik.services\\moosik.services.csproj": {
+    "C:\\Users\\matt.mccleave\\Documents\\Github\\moosik\\server\\moosik.services\\moosik.services.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\matt.mccleave\\Documents\\Github\\moosik\\Server\\moosik.services\\moosik.services.csproj",
+        "projectUniqueName": "C:\\Users\\matt.mccleave\\Documents\\Github\\moosik\\server\\moosik.services\\moosik.services.csproj",
         "projectName": "moosik.services",
-        "projectPath": "C:\\Users\\matt.mccleave\\Documents\\Github\\moosik\\Server\\moosik.services\\moosik.services.csproj",
+        "projectPath": "C:\\Users\\matt.mccleave\\Documents\\Github\\moosik\\server\\moosik.services\\moosik.services.csproj",
         "packagesPath": "C:\\Users\\matt.mccleave\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\matt.mccleave\\Documents\\Github\\moosik\\Server\\moosik.services\\obj\\",
+        "outputPath": "C:\\Users\\matt.mccleave\\Documents\\Github\\moosik\\server\\moosik.services\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\matt.mccleave\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -85,8 +85,8 @@
           "netstandard2.0": {
             "targetAlias": "netstandard2.0",
             "projectReferences": {
-              "C:\\Users\\matt.mccleave\\Documents\\Github\\moosik\\Server\\moosik.dal\\moosik.dal.csproj": {
-                "projectPath": "C:\\Users\\matt.mccleave\\Documents\\Github\\moosik\\Server\\moosik.dal\\moosik.dal.csproj"
+              "C:\\Users\\matt.mccleave\\Documents\\Github\\moosik\\server\\moosik.dal\\moosik.dal.csproj": {
+                "projectPath": "C:\\Users\\matt.mccleave\\Documents\\Github\\moosik\\server\\moosik.dal\\moosik.dal.csproj"
               }
             }
           }

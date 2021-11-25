@@ -7,46 +7,46 @@ INSERT INTO public.resource_types (description) VALUES ('Hyperlink');
 INSERT INTO public.resource_types (description) VALUES ('Embedded Spotify');
 
 /*Users Table*/
-INSERT INTO public.users (username, email) VALUES ('pespinosa0', 'jerickson0@webs.com');
-INSERT INTO public.users (username, email) VALUES ('anesbeth1', 'hfrancesco1@discovery.com');
-INSERT INTO public.users (username, email) VALUES ('nalves2', 'cmcelvogue2@altervista.org');
-INSERT INTO public.users (username, email) VALUES ('vreveland3', 'emcnea3@tripod.com');
-INSERT INTO public.users (username, email) VALUES ('dtrodler41', 'ariseame@soup.io');
-INSERT INTO public.users (username, email) VALUES ('hbowcher5', 'fmarcosc@chronoengine.com');
-INSERT INTO public.users (username, email) VALUES ('mirdaleb', 'asifflettq@vimeo.com');
-INSERT INTO public.users (username, email) VALUES ('amorewoodi', 'zarchibouldj@google.com.au');
-INSERT INTO public.users (username, email) VALUES ('laltonp', 'ebootelll@1688.com');
-INSERT INTO public.users (username, email) VALUES ('cmcmeylerr', 'hfrancesco1@discovery.com');
+INSERT INTO public.users (username, email,active) VALUES ('pespinosa0', 'jerickson0@webs.com', True);
+INSERT INTO public.users (username, email,active) VALUES ('anesbeth1', 'hfrancesco1@discovery.com', True);
+INSERT INTO public.users (username, email,active) VALUES ('nalves2', 'cmcelvogue2@altervista.org', True);
+INSERT INTO public.users (username, email,active) VALUES ('vreveland3', 'emcnea3@tripod.com', True);
+INSERT INTO public.users (username, email,active) VALUES ('dtrodler41', 'ariseame@soup.io', True);
+INSERT INTO public.users (username, email,active) VALUES ('hbowcher5', 'fmarcosc@chronoengine.com', True);
+INSERT INTO public.users (username, email,active) VALUES ('mirdaleb', 'asifflettq@vimeo.com', True);
+INSERT INTO public.users (username, email,active) VALUES ('amorewoodi', 'zarchibouldj@google.com.au', True);
+INSERT INTO public.users (username, email,active) VALUES ('laltonp', 'ebootelll@1688.com', True);
+INSERT INTO public.users (username, email,active) VALUES ('cmcmeylerr', 'hfrancesco1@discovery.com', True);
 
 /*Threads Table*/
-INSERT INTO public.threads (title, thread_type_id, user_id, created_date) VALUES ('Help!', 1, 1, '20210116 11:13:00 AM');
-INSERT INTO public.threads (title, thread_type_id, user_id, created_date) VALUES ('Gym', 1, 2, '20210119 08:12:00 AM');
-INSERT INTO public.threads (title, thread_type_id, user_id, created_date) VALUES ('Working', 2, 4, '20210401 09:11:00 PM');
-INSERT INTO public.threads (title, thread_type_id, user_id, created_date) VALUES ('Going Camping', 2, 3, '20210304 06:00:00 PM');
-INSERT INTO public.threads (title, thread_type_id, user_id, created_date) VALUES ('Holidays', 1, 5, '20210218 04:10:00 PM');
-INSERT INTO public.threads (title, thread_type_id, user_id, created_date) VALUES ('Going to Gym', 1, 6, '20210720 11:15:00 PM');
-INSERT INTO public.threads (title, thread_type_id, user_id, created_date) VALUES ('Bored', 2, 7, '20210914 10:20:00 AM');
-INSERT INTO public.threads (title, thread_type_id, user_id, created_date) VALUES ('On the train', 2, 9, '20211215 10:38:00 AM');
-INSERT INTO public.threads (title, thread_type_id, user_id, created_date) VALUES ('Whats Up', 1, 9, '20210125 10:42:00 PM');
-INSERT INTO public.threads (title, thread_type_id, user_id, created_date) VALUES ('NVM', 1, 9, '20210721 10:54:00 AM');
+INSERT INTO public.threads (title, thread_type_id, user_id, created_date,active) VALUES ('Help!', 1, 1, '20210116 11:13:00 AM', True);
+INSERT INTO public.threads (title, thread_type_id, user_id, created_date,active) VALUES ('Gym', 1, 2, '20210119 08:12:00 AM', True);
+INSERT INTO public.threads (title, thread_type_id, user_id, created_date,active) VALUES ('Working', 2, 4, '20210401 09:11:00 PM', True);
+INSERT INTO public.threads (title, thread_type_id, user_id, created_date,active) VALUES ('Going Camping', 2, 3, '20210304 06:00:00 PM', True);
+INSERT INTO public.threads (title, thread_type_id, user_id, created_date,active) VALUES ('Holidays', 1, 5, '20210218 04:10:00 PM', True);
+INSERT INTO public.threads (title, thread_type_id, user_id, created_date,active) VALUES ('Going to Gym', 1, 6, '20210720 11:15:00 PM', True);
+INSERT INTO public.threads (title, thread_type_id, user_id, created_date,active) VALUES ('Bored', 2, 7, '20210914 10:20:00 AM', True);
+INSERT INTO public.threads (title, thread_type_id, user_id, created_date,active) VALUES ('On the train', 2, 9, '20211215 10:38:00 AM', True);
+INSERT INTO public.threads (title, thread_type_id, user_id, created_date,active) VALUES ('Whats Up', 1, 9, '20210125 10:42:00 PM', True);
+INSERT INTO public.threads (title, thread_type_id, user_id, created_date,active) VALUES ('NVM', 1, 9, '20210721 10:54:00 AM', True);
 
 /*Posts Table*/
-INSERT INTO public.posts(description,user_id, thread_id, created_date) VALUES ('Need some more Beatles music please', 7, 1 ,'20210116 11:13:00 AM');
-INSERT INTO public.posts(description,user_id, thread_id, created_date) VALUES ('Great beat for gym',4,2,  '20210119 08:12:00 AM');
-INSERT INTO public.posts(description,user_id, thread_id, created_date) VALUES ('Need some music for programming please',3,3,  '20210401 09:11:00 PM');
-INSERT INTO public.posts(description,user_id, thread_id, created_date) VALUES ('Good camping music',9,4,  '20210304 06:00:00 PM');
-INSERT INTO public.posts(description,user_id, thread_id, created_date) VALUES ('Need music for holidays please', 3,5, '20210218 04:10:00 PM');
-INSERT INTO public.posts(description,user_id, thread_id, created_date) VALUES ('Need music for cardio please', 6,6, '20210720 11:15:00 PM');
-INSERT INTO public.posts(description,user_id, thread_id, created_date) VALUES ('I like this song when I am bored',9,7,  '20210914 10:20:00 AM');
-INSERT INTO public.posts(description,user_id, thread_id, created_date) VALUES ('Good wee song for being on the train',10,8,'20211215 10:38:00 AM');
-INSERT INTO public.posts(description,user_id, thread_id, created_date) VALUES ('Whats up?',2,9, '20210125 10:42:00 PM');
-INSERT INTO public.posts(description,user_id, thread_id, created_date) VALUES ('Nevermind', 1, 10, '20210721 10:54:00 AM');
+INSERT INTO public.posts(description,user_id, thread_id, created_date,active) VALUES ('Need some more Beatles music please', 7, 1 ,'20210116 11:13:00 AM', True);
+INSERT INTO public.posts(description,user_id, thread_id, created_date,active) VALUES ('Great beat for gym',4,2,  '20210119 08:12:00 AM', True);
+INSERT INTO public.posts(description,user_id, thread_id, created_date,active) VALUES ('Need some music for programming please',3,3,  '20210401 09:11:00 PM', True);
+INSERT INTO public.posts(description,user_id, thread_id, created_date,active) VALUES ('Good camping music',9,4,  '20210304 06:00:00 PM', True);
+INSERT INTO public.posts(description,user_id, thread_id, created_date,active) VALUES ('Need music for holidays please', 3,5, '20210218 04:10:00 PM', True);
+INSERT INTO public.posts(description,user_id, thread_id, created_date,active) VALUES ('Need music for cardio please', 6,6, '20210720 11:15:00 PM', True);
+INSERT INTO public.posts(description,user_id, thread_id, created_date,active) VALUES ('I like this song when I am bored',9,7,  '20210914 10:20:00 AM', True);
+INSERT INTO public.posts(description,user_id, thread_id, created_date,active) VALUES ('Good wee song for being on the train',10,8,'20211215 10:38:00 AM', True);
+INSERT INTO public.posts(description,user_id, thread_id, created_date,active) VALUES ('Whats up?',2,9, '20210125 10:42:00 PM', True);
+INSERT INTO public.posts(description,user_id, thread_id, created_date,active) VALUES ('Nevermind', 1, 10, '20210721 10:54:00 AM', True);
 
-INSERT INTO public.posts(description,user_id, thread_id, created_date) VALUES ('Hey, I listened to this song, it sounded great!', 2, 2, '20210119 11:12:00 AM');
-INSERT INTO public.posts(description,user_id, thread_id, created_date) VALUES ('I love yellow submarine, check it out', 1, 1, '20210116 04:13:00 PM');
-INSERT INTO public.posts(description,user_id, thread_id, created_date) VALUES ('Check out help, great song', 1, 1, '20210119 06:12:00 PM');
-INSERT INTO public.posts(description,user_id, thread_id, created_date) VALUES ('Try this some while running at gym', 4, 6, '20210119 08:48:00 AM');
-INSERT INTO public.posts(description,user_id, thread_id, created_date) VALUES ('I also like this song when I am bored', 7, 7, '20210119 08:55:00 AM');
+INSERT INTO public.posts(description,user_id, thread_id, created_date,active) VALUES ('Hey, I listened to this song, it sounded great!', 2, 2, '20210119 11:12:00 AM', True);
+INSERT INTO public.posts(description,user_id, thread_id, created_date,active) VALUES ('I love yellow submarine, check it out', 1, 1, '20210116 04:13:00 PM', True);
+INSERT INTO public.posts(description,user_id, thread_id, created_date,active) VALUES ('Check out help, great song', 1, 1, '20210119 06:12:00 PM', True);
+INSERT INTO public.posts(description,user_id, thread_id, created_date,active) VALUES ('Try this some while running at gym', 4, 6, '20210119 08:48:00 AM', True);
+INSERT INTO public.posts(description,user_id, thread_id, created_date,active) VALUES ('I also like this song when I am bored', 7, 7, '20210119 08:55:00 AM', True);
 
 /*PostResources Table*/
 INSERT INTO public.post_resources (post_id, resource_type_id, title, value) values (1,1,'Hey Jude', 'youtube.com/heyjude');
