@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "MluaxP4OKFYB1uQX+uZ1k9D8s6+c8QJoVVEcmqGr0MdnficCCKFhpMI73nCt39/0LdEdM+VT7FI3kIpdqDpKFA==",
+  "dgSpecHash": "Q5hr2Hnc9QGcv1T6viuNnIgiwj+idhUFMnUvIzBqdb04GqBAsJA/xRim9RPXBp3g3dPN5Px7Ee8a89Y0uxVi0A==",
   "success": true,
-  "projectFilePath": "C:\\Users\\matt.mccleave\\Documents\\Github\\moosik\\server\\moosik.services\\moosik.services.csproj",
+  "projectFilePath": "C:\\Users\\matt.mccleave\\Documents\\Github\\moosik\\Server\\moosik.services\\moosik.services.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\matt.mccleave\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
     "C:\\Users\\matt.mccleave\\.nuget\\packages\\netstandard.library\\2.0.3\\netstandard.library.2.0.3.nupkg.sha512"

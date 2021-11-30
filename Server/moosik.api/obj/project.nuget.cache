@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "dti9+uANnJNpQDnn4ItcTLqbrPUtAzyrCWoEvaF9i4EiKXPozR1LeIn9UqasWvZjZ1d39VgltNW/yhy8+nDTXw==",
+  "dgSpecHash": "1n7z9JaXFucHD2bcpzdvR8Ov+i0aRvJSvsSqrNH6DkoXgE0wbI0wo5H70wVn6N8VuFJFZiSq7fy/yGod4+zpvQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\matt.mccleave\\Documents\\Github\\moosik\\server\\moosik.api\\moosik.api.csproj",
+  "projectFilePath": "C:\\Users\\matt.mccleave\\Documents\\Github\\moosik\\Server\\moosik.api\\moosik.api.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\matt.mccleave\\.nuget\\packages\\fluentvalidation\\10.3.4\\fluentvalidation.10.3.4.nupkg.sha512",
     "C:\\Users\\matt.mccleave\\.nuget\\packages\\fluentvalidation.aspnetcore\\10.3.4\\fluentvalidation.aspnetcore.10.3.4.nupkg.sha512",

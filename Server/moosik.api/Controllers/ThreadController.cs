@@ -61,12 +61,10 @@ namespace moosik.api.Controllers
         [HttpGet(Name = "GetThreadsAfterDate")]
         public IActionResult GetThreadsAfterDate([FromQuery] DateTime date)
         {
-            //TODO: Finish off
+            
             using var context = new MoosikContext();
             
-            
-            
-            var threads = context.Threads.Where(x => x.CreatedDate > date ).ToList();
+            var threads = context.Threads.Where(x => x.CreatedDate > date ).AsNoTracking().ToList();
 
             return Ok(threads);
         }

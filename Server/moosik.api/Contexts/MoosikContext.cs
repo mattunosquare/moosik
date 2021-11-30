@@ -20,7 +20,9 @@ public class MoosikContext : DbContext
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         base.OnConfiguring(optionsBuilder);
-        optionsBuilder.UseNpgsql("Host=localhost;Database=Moosik;Username=user;Password=password");
+        var dbConnectionString = Environment.GetEnvironmentVariable("CONNECTION_STRING") ??
+                                 "Host=localhost;Database=Moosik;Username=user;Password=password";
+        optionsBuilder.UseNpgsql(dbConnectionString);
     }
 }
 
