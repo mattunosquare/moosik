@@ -4,6 +4,15 @@
         <name>moosik.api</name>
     </assembly>
     <members>
+        <member name="M:moosik.api.Controllers.PostController.GetAllPost(System.Nullable{System.Int32})">
+            <summary>
+            Returns a list of all post object
+            </summary>
+            <returns>A list of all post objects</returns>
+            <response code="200">Success - List has been successfully returned</response>
+            <response code="400">Bad Request - Check input values</response>
+            <response code="404">Not Found - No such list exists</response>
+        </member>
         <member name="M:moosik.api.Controllers.PostController.GetPostById(System.Int32)">
             <summary>
             Finds the post matching a given PostId
@@ -57,7 +66,7 @@
             <response code="404">Not Found - No such Post exists to update</response>
             <exception cref="T:System.NotImplementedException"></exception>
         </member>
-        <member name="M:moosik.api.Controllers.PostController.CreatePost(moosik.api.ViewModels.PostViewModel)">
+        <member name="M:moosik.api.Controllers.PostController.CreatePost(moosik.api.ViewModels.CreatePostViewModel)">
              <summary>
              Creates a new Post using the provided Post object
              </summary>
@@ -66,13 +75,15 @@
             
                  Body:
                  {
-                     description: "Cool Song",
-                     userId: 4,
-                     threadId: 7,
-                     createdDate: "2008-10-31T17:04:32"
+                        "ThreadId": 1,
+                        "UserId": 7,
+                        "Description": "REPLY FROM POSTMAN",
+                        "PostResourceTitle": "MY PR TITLE",
+                        "PostResourceValue": "MY PR VALUE",
+                        "ResourceTypeId": 1
                  }
              </remarks>
-             <param name="postViewModel"></param>
+             <param name="createPostViewModel"></param>
              <returns>Newly created Post provided it has been created, otherwise an error code</returns>
              <response code="201">Success - Post has been successfully created</response>
              <response code="400">Bad Request - Check input values</response>
@@ -94,6 +105,15 @@
             <response code="200">Success - List of ResourceTypes successfully return</response>
             <response code="404">Not Found - No such list exists</response>
             <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="M:moosik.api.Controllers.ThreadController.GetAllThreads(System.Nullable{System.Int32})">
+            <summary>
+            Returns list of all ThreadViewModels
+            </summary>
+            <returns>A list of all ThreadViewModels</returns>
+            <response code="200">Success - List of ThreadViewModels has been successfully returned</response>
+            <response code="400">Bad Request - Check input values</response>
+            <response code="404">Not Found - No such list exists</response>
         </member>
         <member name="M:moosik.api.Controllers.ThreadController.GetThreadById(System.Int32)">
             <summary>
@@ -144,22 +164,25 @@
              <response code="404">Not Found - No such Thread exists to update</response>
              <exception cref="T:System.NotImplementedException"></exception>
         </member>
-        <member name="M:moosik.api.Controllers.ThreadController.CreateThread(moosik.api.ViewModels.ThreadViewModel)">
+        <member name="M:moosik.api.Controllers.ThreadController.CreateThread(moosik.api.ViewModels.CreateThreadViewModel)">
              <summary>
-             Creates a new Thread using the provided Thread object
+             Creates a new Thread using the provided CreateThreadViewModel
              </summary>
              <remarks>
              Sample request:
             
                  Body:
                  {
-                     title: "Need song for gym please",
-                     threadTypeId: 8,
-                     userId: 10,
-                     createdDate: "2008-10-31T17:04:32"
+                     Title: "Need song for gym please",
+                     PostDescription: "Going to gym, please help with song"
+                     ThreadTypeId: 2,
+                     UserId: 1,
+                     PostResourceTitle: "Beatles - Ticket to Ride"
+                     PostResourceValue: "htp://youtube.com/tickettoride"
+                     ResourceTypeId: 1
                  }
              </remarks>
-             <param name="threadViewModelDto"></param>
+             <param name="createThreadViewModel"></param>
              <returns>Newly created Thread provided it has been created, otherwise an error code</returns>
              <response code="201">Success - Post has been successfully created</response>
              <response code="400">Bad Request - Check input values</response>
@@ -181,6 +204,15 @@
             <response code="200">Success - List of ThreadTypes successfully return</response>
             <response code="404">Not Found - No such list exists</response>
             <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="M:moosik.api.Controllers.UserController.GetAllUsers">
+            <summary>
+            Get list of all users
+            </summary>
+            <returns>A list containing all users</returns>
+            <response code="200">Success - List has been successfully returned</response>
+            <response code="400">Bad Request - Check input values</response>
+            <response code="404">Not Found - No such list exists</response>
         </member>
         <member name="M:moosik.api.Controllers.UserController.GetUserById(System.Int32)">
             <summary>

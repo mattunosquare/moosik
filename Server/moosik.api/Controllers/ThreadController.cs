@@ -18,6 +18,82 @@ namespace moosik.api.Controllers
     public class ThreadController : ControllerBase
     {
         /// <summary>
+        /// Returns list of all ThreadViewModels
+        /// </summary>
+        /// <returns>A list of all ThreadViewModels</returns>
+        /// <response code="200">Success - List of ThreadViewModels has been successfully returned</response>
+        /// <response code="400">Bad Request - Check input values</response>
+        /// <response code="404">Not Found - No such list exists</response>
+        [Consumes(MediaTypeNames.Application.Json)]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<ThreadViewModel>))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [HttpGet]
+        public IActionResult GetAllThreads([FromQuery]int? userId = null)
+        {
+            using var context = new MoosikContext();
+            
+                var threads = context.Threads.Select(x => new ThreadViewModel()
+                {
+                    Id = x.Id,
+                    Title = x.Title,
+                    ThreadTypeId = x.ThreadTypeId,
+                    ThreadType = new ThreadTypeViewModel()
+                    {
+                        Id = x.ThreadType.Id,
+                        Description = x.ThreadType.Description,
+                    },
+                    UserId = x.UserId,
+                    User = new UserViewModel()
+                    {
+                        Id = x.User.Id,
+                        Username = x.User.Username,
+                        Email = x.User.Email,
+                        Active = x.Active
+                    },
+                    CreatedDate = x.CreatedDate,
+                    Active = x.Active,
+                    Posts = x.Posts.OrderBy(d => d.CreatedDate).Select(p => new PostViewModel()
+                    {
+                        Id = p.Id,
+                        Description = p.Description,
+                        UserId = p.UserId,
+                        User = new UserViewModel()
+                        {
+                            Id = p.User.Id,
+                            Username = p.User.Username,
+                            Email = p.User.Email,
+                            Active = p.User.Active
+                        },
+                        ThreadId = p.ThreadId,
+                        CreatedDate = p.CreatedDate,
+                        Active = p.Active,
+                        PostResources = p.PostResources.Select(pr => new PostResourceViewModel()
+                        {
+                            Id = pr.Id,
+                            Title = pr.Title,
+                            Value = pr.Value,
+                            ResourceTypeId = pr.ResourceTypeId,
+                            ResourceType = new ResourceTypeViewModel()
+                            {
+                                Id = pr.ResourceType.Id,
+                                Description = pr.ResourceType.Description
+                            }
+                        })
+                    }),
+                });
+
+                //Begin filtering provided a valid query has been provided
+                if (userId != null)
+                {
+                    threads = threads.Where(x => x.UserId == userId);
+                }
+                
+            return Ok(threads.ToList());
+        }
+        
+        /// <summary>
         /// Finds the Thread matching a given ThreadId
         /// </summary>
         /// <param name="id"></param>
@@ -58,7 +134,7 @@ namespace moosik.api.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<ThreadViewModel>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [HttpGet(Name = "GetThreadsAfterDate")]
+        [HttpGet("GetAfterDate",Name = "GetThreadsAfterDate")]
         public IActionResult GetThreadsAfterDate([FromQuery] DateTime date)
         {
             
@@ -115,42 +191,69 @@ namespace moosik.api.Controllers
         }
 
         /// <summary>
-        /// Creates a new Thread using the provided Thread object
+        /// Creates a new Thread using the provided CreateThreadViewModel
         /// </summary>
         /// <remarks>
         /// Sample request:
         ///
         ///     Body:
         ///     {
-        ///         title: "Need song for gym please",
-        ///         threadTypeId: 8,
-        ///         userId: 10,
-        ///         createdDate: "2008-10-31T17:04:32"
+        ///         Title: "Need song for gym please",
+        ///         PostDescription: "Going to gym, please help with song"
+        ///         ThreadTypeId: 2,
+        ///         UserId: 1,
+        ///         PostResourceTitle: "Beatles - Ticket to Ride"
+        ///         PostResourceValue: "htp://youtube.com/tickettoride"
+        ///         ResourceTypeId: 1
         ///     }
         /// </remarks>
-        /// <param name="threadViewModelDto"></param>
+        /// <param name="createThreadViewModel"></param>
         /// <returns>Newly created Thread provided it has been created, otherwise an error code</returns>
         /// <response code="201">Success - Post has been successfully created</response>
         /// <response code="400">Bad Request - Check input values</response>
         /// <exception cref="NotImplementedException"></exception>
         [Consumes(MediaTypeNames.Application.Json)]
         [Produces("application/json")]
-        [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(ThreadViewModel))]
+        [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [HttpPost(Name = "CreateThread")]
-        public IActionResult CreateThread([FromBody] ThreadViewModel threadViewModelDto)
+        [HttpPost]
+        public IActionResult CreateThread([FromBody] CreateThreadViewModel createThreadViewModel)
         {
-            var context = new MoosikContext();
+            using var context = new MoosikContext();
 
-            context.Threads.Add(new Thread
+            //Todo: Make optional by null checking if incoming data contains a postResource, if so skip this chunk and deal with line 234
+            var postResource = context.PostResources.Add(new PostResource()
             {
-                Title = threadViewModelDto.Title,
-                Active = true,
+                Title = createThreadViewModel.PostResourceTitle,
+                Value = createThreadViewModel.PostResourceValue,
+                ResourceTypeId = createThreadViewModel.ResourceTypeId
+            }).Entity;
+            
+            var post = context.Posts.Add(new Post()
+            {
+                Description = createThreadViewModel.PostDescription,
                 CreatedDate = DateTime.UtcNow,
-                ThreadTypeId = threadViewModelDto.ThreadTypeId,
-                UserId = threadViewModelDto.UserId
-            });
+                Active = true,
+                UserId = createThreadViewModel.UserId,
+                PostResources = new List<PostResource>()
+                {
+                    postResource
+                }
+            }).Entity;
 
+            var thread = context.Threads.Add(new Thread()
+            {
+                Title = createThreadViewModel.Title,
+                CreatedDate = DateTime.UtcNow,
+                Active = true,
+                UserId = createThreadViewModel.UserId,
+                ThreadTypeId = createThreadViewModel.ThreadTypeId,
+                Posts = new List<Post>()
+                {
+                    post
+                }
+            });
+            
             context.SaveChanges();
 
             return Ok();

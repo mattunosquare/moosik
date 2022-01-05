@@ -13,7 +13,8 @@ services:
       - db:/var/lib/postgresql/data
   flyway:
     image: flyway/flyway
-    command: -url=jdbc:postgresql://db/Moosik -schemas=public -user=user -password=password -connectRetries=5 migrate
+    command: -url=jdbc:postgresql://db/Moosik -schemas=public -user=user
+      -password=password -connectRetries=5 migrate
     volumes:
       - ./Migrations:/flyway/sql
     depends_on:
@@ -25,6 +26,12 @@ services:
     environment:
       CONNECTION_STRING: "Host=db;Database=Moosik;Username=user;Password=password"
     depends_on:
-      - flyway    
+      - flyway
+  ui:
+    build: ./FrontEnd
+    ports:
+      - 80:80
+    depends_on:
+      - api
 volumes:
-  db:
+  db: 

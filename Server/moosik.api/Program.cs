@@ -38,9 +38,9 @@ builder.Services.AddFluentValidationRulesToSwagger();
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("Test Policy",
-        builder =>
+        cp =>
         {
-            builder.WithOrigins("http://localhost:3000").AllowAnyHeader().AllowAnyMethod();
+            cp.WithOrigins("http://localhost").AllowAnyHeader().AllowAnyMethod();
         });
 });
 

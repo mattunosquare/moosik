@@ -18,6 +18,28 @@ namespace moosik.api.Controllers
     public class UserController : ControllerBase
     {
         /// <summary>
+        /// Get list of all users
+        /// </summary>
+        /// <returns>A list containing all users</returns>
+        /// <response code="200">Success - List has been successfully returned</response>
+        /// <response code="400">Bad Request - Check input values</response>
+        /// <response code="404">Not Found - No such list exists</response>
+        [Consumes(MediaTypeNames.Application.Json)]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<UserViewModel>))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [HttpGet]
+        public IActionResult GetAllUsers()
+        {
+            using var context = new MoosikContext();
+
+            var user = context.Users.ToList();
+
+            return Ok(user);
+        }
+        
+        /// <summary>
         /// Finds the User matching a given UserId
         /// </summary>
         /// <param name="id"></param>
@@ -59,7 +81,7 @@ namespace moosik.api.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UserViewModel))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [HttpGet(Name = "GetUserByUsernameAndEmail")]
+        [HttpGet("GetUserByUsernameAndEmail",Name = "GetUserByUsernameAndEmail")]
         public IActionResult GetUserByUsernameAndEmail([FromQuery]string username, [FromQuery]string email)
         {
             var context = new MoosikContext();

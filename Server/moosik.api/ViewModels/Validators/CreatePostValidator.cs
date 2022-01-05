@@ -1,6 +1,11 @@
-﻿namespace moosik.api.ViewModels.Validators;
+﻿using FluentValidation;
 
-public class CreatePostValidator
+namespace moosik.api.ViewModels.Validators;
+
+public class CreatePostValidator : AbstractValidator<CreatePostViewModel>
 {
-    
+    public CreatePostValidator()
+    {
+        RuleFor(x => x.ResourceTypeId).NotEmpty().NotNull();
+    }
 }

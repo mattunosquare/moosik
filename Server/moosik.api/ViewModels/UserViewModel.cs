@@ -12,5 +12,9 @@ public class UserViewModel
     public string Email { get; set; }
     
     public bool Active { get; set; }
+    
+    public IEnumerable<ThreadViewModel> Threads { get; set; }
+    
+    public IEnumerable<PostViewModel> Posts { get; set; }
 }
 

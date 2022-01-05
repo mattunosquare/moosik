@@ -15,6 +15,35 @@ namespace moosik.api.Controllers
     public class PostController : ControllerBase
     {
         /// <summary>
+        /// Returns a list of all post object
+        /// </summary>
+        /// <returns>A list of all post objects</returns>
+        /// <response code="200">Success - List has been successfully returned</response>
+        /// <response code="400">Bad Request - Check input values</response>
+        /// <response code="404">Not Found - No such list exists</response>
+        [Consumes(MediaTypeNames.Application.Json)]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<PostViewModel>))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [HttpGet]
+        public IActionResult GetAllPost([FromQuery]int? threadId = null)
+        {
+            var context = new MoosikContext();
+
+            var posts = context.Posts.AsQueryable();
+            
+            //Begin filtering provided a valid query has been provided
+
+            if (threadId != null)
+            {
+                posts = posts.Where(x => x.ThreadId == threadId);
+            }
+            
+            return Ok(posts.ToList());
+        }
+        
+        /// <summary>
         /// Finds the post matching a given PostId
         /// </summary>
         /// <param name="id" example = "2"></param>
@@ -59,7 +88,7 @@ namespace moosik.api.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<PostViewModel>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [HttpGet(Name = "GetPostsAfterDate")]
+        [HttpGet("GetAfterDate")]
         public IActionResult GetPostsAfterDate([FromQuery] DateTime date)
         {
             var context = new MoosikContext();
@@ -119,25 +148,48 @@ namespace moosik.api.Controllers
         ///
         ///     Body:
         ///     {
-        ///         description: "Cool Song",
-        ///         userId: 4,
-        ///         threadId: 7,
-        ///         createdDate: "2008-10-31T17:04:32"
+        ///            "ThreadId": 1,
+        ///            "UserId": 7,
+        ///            "Description": "REPLY FROM POSTMAN",
+        ///            "PostResourceTitle": "MY PR TITLE",
+        ///            "PostResourceValue": "MY PR VALUE",
+        ///            "ResourceTypeId": 1
         ///     }
         /// </remarks>
-        /// <param name="postViewModel"></param>
+        /// <param name="createPostViewModel"></param>
         /// <returns>Newly created Post provided it has been created, otherwise an error code</returns>
         /// <response code="201">Success - Post has been successfully created</response>
         /// <response code="400">Bad Request - Check input values</response>
         /// <exception cref="NotImplementedException"></exception>
         [Consumes(MediaTypeNames.Application.Json)]
         [Produces("application/json")]
-        [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(PostViewModel))]
+        [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [HttpPost(Name = "CreatePost")]
-        public IActionResult CreatePost([FromBody] PostViewModel postViewModel)
+        [HttpPost]
+        public IActionResult CreatePost([FromBody] CreatePostViewModel createPostViewModel)
         {
-            throw new NotImplementedException();
+            using var context = new MoosikContext();
+
+            var postResource = context.PostResources.Add(new PostResource()
+            {
+                Title = createPostViewModel.PostResourceTitle,
+                Value = createPostViewModel.PostResourceValue,
+                ResourceTypeId = createPostViewModel.ResourceTypeId
+            }).Entity;
+
+            var post = context.Posts.Add(new Post()
+            {
+                Description = createPostViewModel.Description,
+                CreatedDate = DateTime.UtcNow,
+                Active = true,
+                UserId = createPostViewModel.UserId,
+                ThreadId = createPostViewModel.ThreadId,
+                PostResources = new List<PostResource>() {postResource}
+            });
+
+            context.SaveChanges();
+
+            return Ok();
         }
         
         /// <summary>
@@ -161,14 +213,18 @@ namespace moosik.api.Controllers
         /// <response code="200">Success - List of ResourceTypes successfully return</response>
         /// <response code="404">Not Found - No such list exists</response>
         /// <exception cref="NotImplementedException"></exception>
-        [HttpGet("/resourcetypes")]
+        [HttpGet("resourcetypes")]
         [Consumes(MediaTypeNames.Application.Json)]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<ResourceTypeViewModel>))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public IActionResult GetAllResourceTypes()
         {
-            throw new NotImplementedException();
+            using var context = new MoosikContext();
+
+            var types = context.ResourceTypes.Distinct();
+
+            return Ok(types.ToList());
         }
     }
 }
