@@ -7,5 +7,7 @@ FROM mcr.microsoft.com/dotnet/aspnet:6.0
 WORKDIR /app
 COPY --from=build /app ./
 ENV ASPNETCORE_URLS=http://*:5000
+ARG API_CONNECTION_STRING
+ENV CONNECTION_STRING=$API_CONNECTION_STRING
 EXPOSE 5000
 ENTRYPOINT ["dotnet", "moosik.api.dll"]

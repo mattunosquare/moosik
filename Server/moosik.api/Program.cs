@@ -35,20 +35,19 @@ builder.Services.AddSwaggerGen(options =>
 
 builder.Services.AddFluentValidationRulesToSwagger();
 
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy("Test Policy",
-        cp =>
-        {
-            cp.WithOrigins("http://localhost").AllowAnyHeader().AllowAnyMethod();
-        });
-});
+
+builder.Services.AddHealthChecks();
 
 var app = builder.Build();
 AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
 app.UseRouting();
-app.UseCors("Test Policy");
+app.UseCors(
+    o => o
+        .AllowAnyMethod()
+        .AllowAnyHeader()
+        .AllowAnyOrigin()
+);
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -63,5 +62,9 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.UseEndpoints(x => x.MapControllers());
+app.UseEndpoints(x =>
+{
+    x.MapHealthChecks("/api/health");
+    x.MapControllers();
+});
 app.Run();
