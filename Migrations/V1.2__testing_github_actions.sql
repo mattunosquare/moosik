@@ -1,1 +1,1 @@
-INSERT INTO public.post_resources (post_id, resource_type_id, title, value) values (15,2, 'Github Actionasdfasdf', 'Github Actions');
+INSERT INTO public.post_resources (post_id, resource_type_id, title, value) values (15,2, 'Github Actions', 'Github Actions');
