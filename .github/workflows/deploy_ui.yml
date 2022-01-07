@@ -30,9 +30,8 @@ jobs:
       - name: npm build
         id: build-ui
         env:
+          CI: false
           REACT_APP_API_URL: ${{ secrets.API_URL }}
         run: npm i && npm run-script build
-        env: 
-          CI: false
       - name: updated app to s3
         run: aws s3 sync build s3://http://moosikwebsite.com.s3-website-eu-west-1.amazonaws.com/
