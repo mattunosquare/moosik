@@ -1,15 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Mime;
-using System.Threading.Tasks;
-using FluentValidation.AspNetCore;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using moosik.api.Contexts;
 using moosik.api.ViewModels;
-using Thread = moosik.api.Contexts.Thread;
+using moosik.services.Interfaces;
+using AutoMapper;
+using moosik.services.Dtos;
+
 
 namespace moosik.api.Controllers
 {
@@ -17,6 +12,14 @@ namespace moosik.api.Controllers
     [ApiController]
     public class ThreadController : ControllerBase
     {
+        private readonly IThreadService _service;
+        private readonly IMapper _mapper;
+
+        public ThreadController(IThreadService service, IMapper mapper)
+        {
+            _service = service;
+            _mapper = mapper;
+        }
         /// <summary>
         /// Returns list of all ThreadViewModels
         /// </summary>
@@ -32,65 +35,11 @@ namespace moosik.api.Controllers
         [HttpGet]
         public IActionResult GetAllThreads([FromQuery]int? userId = null)
         {
-            using var context = new MoosikContext();
-            
-                var threads = context.Threads.Select(x => new ThreadViewModel()
-                {
-                    Id = x.Id,
-                    Title = x.Title,
-                    ThreadTypeId = x.ThreadTypeId,
-                    ThreadType = new ThreadTypeViewModel()
-                    {
-                        Id = x.ThreadType.Id,
-                        Description = x.ThreadType.Description,
-                    },
-                    UserId = x.UserId,
-                    User = new UserViewModel()
-                    {
-                        Id = x.User.Id,
-                        Username = x.User.Username,
-                        Email = x.User.Email,
-                        Active = x.Active
-                    },
-                    CreatedDate = x.CreatedDate,
-                    Active = x.Active,
-                    Posts = x.Posts.OrderBy(d => d.CreatedDate).Select(p => new PostViewModel()
-                    {
-                        Id = p.Id,
-                        Description = p.Description,
-                        UserId = p.UserId,
-                        User = new UserViewModel()
-                        {
-                            Id = p.User.Id,
-                            Username = p.User.Username,
-                            Email = p.User.Email,
-                            Active = p.User.Active
-                        },
-                        ThreadId = p.ThreadId,
-                        CreatedDate = p.CreatedDate,
-                        Active = p.Active,
-                        PostResources = p.PostResources.Select(pr => new PostResourceViewModel()
-                        {
-                            Id = pr.Id,
-                            Title = pr.Title,
-                            Value = pr.Value,
-                            ResourceTypeId = pr.ResourceTypeId,
-                            ResourceType = new ResourceTypeViewModel()
-                            {
-                                Id = pr.ResourceType.Id,
-                                Description = pr.ResourceType.Description
-                            }
-                        })
-                    }),
-                });
+            var threadsDto = _service.GetAllThreads(userId);
 
-                //Begin filtering provided a valid query has been provided
-                if (userId != null)
-                {
-                    threads = threads.Where(x => x.UserId == userId);
-                }
-                
-            return Ok(threads.ToList());
+            //Another mapper here to convert ThreadDto to ThreadViewModel
+            
+            return Ok(threadsDto.ToList());
         }
         
         /// <summary>
@@ -110,10 +59,10 @@ namespace moosik.api.Controllers
         [HttpGet("{id:int}", Name = "GetThreadById")]
         public IActionResult GetThreadById([FromRoute] int id)
         {
-            using var context = new MoosikContext();
-
-            var thread = context.Threads.Single(x => x.Id == id);
-            return Ok(thread);
+            // var thread = context.Threads.Single(x => x.Id == id);
+            // return Ok(thread);
+            _service.GetThreadById(id);
+            return Ok();
         }
         
         /// <summary>
@@ -138,11 +87,13 @@ namespace moosik.api.Controllers
         public IActionResult GetThreadsAfterDate([FromQuery] DateTime date)
         {
             
-            using var context = new MoosikContext();
-            
-            var threads = context.Threads.Where(x => x.CreatedDate > date ).AsNoTracking().ToList();
-
-            return Ok(threads);
+            // using var context = new MoosikContext();
+            //
+            // var threads = context.Threads.Where(x => x.CreatedDate > date ).AsNoTracking().ToList();
+            //
+            // return Ok(threads);
+            _service.GetThreadsAfterDate(date);
+            return Ok();
         }
 
         /// <summary>
@@ -174,20 +125,22 @@ namespace moosik.api.Controllers
         [HttpPut(Name = "UpdateThread")]
         public IActionResult UpdateThread([FromBody] ThreadViewModel threadViewModelDto)
         {
-            using var context = new MoosikContext();
-
-            //Find matching thread object in DB
-            var thread = context.Threads.Find(threadViewModelDto.Id);
-            
-            //Update values
-            thread.Title = threadViewModelDto.Title;
-            thread.ThreadTypeId = threadViewModelDto.ThreadTypeId;
-            thread.UserId = threadViewModelDto.UserId;
-            
-            //Save values
-            context.SaveChanges();
-
-            return Ok(thread);
+            // using var context = new MoosikContext();
+            //
+            // //Find matching thread object in DB
+            // var thread = context.Threads.Find(threadViewModelDto.Id);
+            //
+            // //Update values
+            // thread.Title = threadViewModelDto.Title;
+            // thread.ThreadTypeId = threadViewModelDto.ThreadTypeId;
+            // thread.UserId = threadViewModelDto.UserId;
+            //
+            // //Save values
+            // context.SaveChanges();
+            //
+            // return Ok(thread);
+            //_service.UpdateThread(ThreadViewModel);
+            return Ok();
         }
 
         /// <summary>
@@ -219,43 +172,45 @@ namespace moosik.api.Controllers
         [HttpPost]
         public IActionResult CreateThread([FromBody] CreateThreadViewModel createThreadViewModel)
         {
-            using var context = new MoosikContext();
-
-            //Todo: Make optional by null checking if incoming data contains a postResource, if so skip this chunk and deal with line 234
-            var postResource = context.PostResources.Add(new PostResource()
-            {
-                Title = createThreadViewModel.PostResourceTitle,
-                Value = createThreadViewModel.PostResourceValue,
-                ResourceTypeId = createThreadViewModel.ResourceTypeId
-            }).Entity;
-            
-            var post = context.Posts.Add(new Post()
-            {
-                Description = createThreadViewModel.PostDescription,
-                CreatedDate = DateTime.UtcNow,
-                Active = true,
-                UserId = createThreadViewModel.UserId,
-                PostResources = new List<PostResource>()
-                {
-                    postResource
-                }
-            }).Entity;
-
-            var thread = context.Threads.Add(new Thread()
-            {
-                Title = createThreadViewModel.Title,
-                CreatedDate = DateTime.UtcNow,
-                Active = true,
-                UserId = createThreadViewModel.UserId,
-                ThreadTypeId = createThreadViewModel.ThreadTypeId,
-                Posts = new List<Post>()
-                {
-                    post
-                }
-            });
-            
-            context.SaveChanges();
-
+            // using var context = new MoosikContext();
+            //
+            // //Todo: Make optional by null checking if incoming data contains a postResource, if so skip this chunk and deal with line 234
+            // var postResource = context.PostResources.Add(new PostResource()
+            // {
+            //     Title = createThreadViewModel.PostResourceTitle,
+            //     Value = createThreadViewModel.PostResourceValue,
+            //     ResourceTypeId = createThreadViewModel.ResourceTypeId
+            // }).Entity;
+            //
+            // var post = context.Posts.Add(new Post()
+            // {
+            //     Description = createThreadViewModel.PostDescription,
+            //     CreatedDate = DateTime.UtcNow,
+            //     Active = true,
+            //     UserId = createThreadViewModel.UserId,
+            //     PostResources = new List<PostResource>()
+            //     {
+            //         postResource
+            //     }
+            // }).Entity;
+            //
+            // var thread = context.Threads.Add(new Thread()
+            // {
+            //     Title = createThreadViewModel.Title,
+            //     CreatedDate = DateTime.UtcNow,
+            //     Active = true,
+            //     UserId = createThreadViewModel.UserId,
+            //     ThreadTypeId = createThreadViewModel.ThreadTypeId,
+            //     Posts = new List<Post>()
+            //     {
+            //         post
+            //     }
+            // });
+            //
+            // context.SaveChanges();
+            //
+            // return Ok();
+            //_service.CreateThread(threadViewModel);
             return Ok();
         }
 
@@ -270,14 +225,16 @@ namespace moosik.api.Controllers
         [HttpDelete("{id:int}", Name = "DeleteThreadById")]
         public IActionResult DeleteThreadById([FromRoute] int id)
         {
-            var context = new MoosikContext();
-
-            var thread = context.Threads.Single(x => x.Id == id);
-
-            thread.Active = false;
-
-            context.SaveChanges();
-
+            // var context = new MoosikContext();
+            //
+            // var thread = context.Threads.Single(x => x.Id == id);
+            //
+            // thread.Active = false;
+            //
+            // context.SaveChanges();
+            //
+            // return Ok();
+            _service.DeleteThreadById(id);
             return Ok();
         }
         
@@ -295,10 +252,11 @@ namespace moosik.api.Controllers
         [HttpGet("threadtypes", Name = "GetAllThreadTypes")]
         public IActionResult GetAllThreadTypes()
         {
-            using var context = new MoosikContext();
+            var threadTypesDto = _service.GetAllThreadTypes().ToList();
+
+            var threadTypesViewModel = _mapper.Map<List<ThreadTypeViewModel>>(threadTypesDto);
             
-            return Ok(context.ThreadTypes.ToList());
+            return Ok(threadTypesViewModel);
         }
-        
     }
 }

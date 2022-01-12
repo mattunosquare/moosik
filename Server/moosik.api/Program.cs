@@ -3,8 +3,16 @@ using System.Text.Json.Serialization;
 using FluentValidation.AspNetCore;
 using MicroElements.Swashbuckle.FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
+using moosik.api.ViewModels;
 using moosik.api.ViewModels.Validators;
+using moosik.dal.Contexts;
+using moosik.services.Dtos;
+using moosik.services.Interfaces;
+using moosik.services.Mapping;
+using moosik.services.Services;
+using Thread = moosik.dal.Contexts.Thread;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -33,7 +41,33 @@ builder.Services.AddSwaggerGen(options =>
     
 });
 
+builder.Services.AddTransient<IThreadService, ThreadService>();
+builder.Services.AddTransient<IPostService, PostService>();
+builder.Services.AddTransient<IUserService, UserService>();
+
+builder.Services.AddAutoMapper(cfg =>
+{
+    // cfg.AddProfile<EntityDtoMappingProfile>();
+    //cfg.AddProfile<ViewModelDtoMappingProfile>();
+     cfg.CreateMap<Post, PostDto>();
+     cfg.CreateMap<PostResource, PostResourceDto>();
+     cfg.CreateMap<ResourceType, ResourceTypeDto>();
+     cfg.CreateMap<Thread, ThreadDto>();
+     cfg.CreateMap<ICollection<Thread>, ICollection<ThreadDto>>();
+    
+     cfg.CreateMap<ThreadType, ThreadTypeDto>();
+     cfg.CreateMap<ICollection<ThreadType>, ICollection<ThreadTypeDto>>();
+     cfg.CreateMap<List<ThreadTypeDto>, List<ThreadTypeViewModel>>();
+    
+     cfg.CreateMap<User, UserDto>();
+     cfg.CreateMap<ICollection<ThreadDto>, ICollection<ThreadViewModel>>();
+});
+
+
 builder.Services.AddFluentValidationRulesToSwagger();
+
+builder.Services.AddScoped(_ => new MoosikContext(Environment.GetEnvironmentVariable("CONNECTION_STRING") ??
+        "Host=localhost;Database=Moosik;Username=user;Password=password"));
 
 
 builder.Services.AddHealthChecks();

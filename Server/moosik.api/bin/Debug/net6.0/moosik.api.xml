@@ -6,9 +6,10 @@
     <members>
         <member name="M:moosik.api.Controllers.PostController.GetAllPost(System.Nullable{System.Int32})">
             <summary>
-            Returns a list of all post object
+            Returns a list of all post object. Filters posts matching threadId if provided.
+            <param name="threadId"></param>
             </summary>
-            <returns>A list of all post objects</returns>
+            <returns>A list of PostViewModels</returns>
             <response code="200">Success - List has been successfully returned</response>
             <response code="400">Bad Request - Check input values</response>
             <response code="404">Not Found - No such list exists</response>
@@ -205,7 +206,7 @@
             <response code="404">Not Found - No such list exists</response>
             <exception cref="T:System.NotImplementedException"></exception>
         </member>
-        <member name="M:moosik.api.Controllers.UserController.GetAllUsers">
+        <member name="M:moosik.api.Controllers.UserController.GetAllUsers(System.Nullable{System.Int32})">
             <summary>
             Get list of all users
             </summary>

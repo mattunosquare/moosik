@@ -1,14 +1,17 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Net.Mime;
 using Microsoft.EntityFrameworkCore;
 #pragma warning disable CS8618
 
-namespace moosik.api.Contexts;
+namespace moosik.dal.Contexts;
 
 public class MoosikContext : DbContext
 {
-   
+    private readonly string _connectionString;
+    public MoosikContext(string connectionString) => _connectionString = connectionString;
     
     public DbSet<ThreadType> ThreadTypes { get; set; }
     public DbSet<PostResource> PostResources { get; set; }
@@ -16,13 +19,12 @@ public class MoosikContext : DbContext
     public DbSet<Post> Posts { get; set; }
     public DbSet<Thread> Threads { get; set; }
     public DbSet<User> Users { get; set; }
-
+    
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         base.OnConfiguring(optionsBuilder);
-        var dbConnectionString = Environment.GetEnvironmentVariable("CONNECTION_STRING") ??
-                                 "Host=localhost;Database=Moosik;Username=user;Password=password";
-        optionsBuilder.UseNpgsql(dbConnectionString);
+        
+        optionsBuilder.UseNpgsql(_connectionString);
     }
 }
 
@@ -125,7 +127,7 @@ public class Thread
     
     [Column("active")]
     public bool Active { get; set; }
-
+    
     [Column("user_id")]
     public int UserId { get; set; }
     

@@ -19,19 +19,19 @@ services:
       - ./Migrations:/flyway/sql
     depends_on:
       - db
-  api:
-    build: ./Server
-    ports:
-      - 5000:5000
-    environment:
-      CONNECTION_STRING: "Host=db;Database=Moosik;Username=user;Password=password"
-    depends_on:
-      - flyway
-  ui:
-    build: ./FrontEnd
-    ports:
-      - 80:80
-    depends_on:
-      - api
+  # api:
+  #   build: ./Server
+  #   ports:
+  #     - 5000:5000
+  #   environment:
+  #     CONNECTION_STRING: "Host=db;Database=Moosik;Username=user;Password=password"
+  #   depends_on:
+  #     - flyway
+  # ui:
+  #   build: ./FrontEnd
+  #   ports:
+  #     - 80:80
+  #   depends_on:
+  #     - api
 volumes:
   db: 

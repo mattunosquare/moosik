@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using moosik.api.Contexts;
 using moosik.api.ViewModels;
+using moosik.services.Interfaces;
 using Thread = System.Threading.Thread;
 
 namespace moosik.api.Controllers
@@ -17,6 +17,8 @@ namespace moosik.api.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
+        private readonly IUserService _service;
+        public UserController(IUserService service) => _service = service;
         /// <summary>
         /// Get list of all users
         /// </summary>
@@ -30,13 +32,15 @@ namespace moosik.api.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [HttpGet]
-        public IActionResult GetAllUsers()
+        public IActionResult GetAllUsers([FromQuery]int? userId = null)
         {
-            using var context = new MoosikContext();
-
-            var user = context.Users.ToList();
-
-            return Ok(user);
+            // using var context = new MoosikContext();
+            //
+            // var user = context.Users.ToList();
+            //
+            // return Ok(user);
+            _service.GetAllUsers(userId);
+            return Ok();
         }
         
         /// <summary>
@@ -56,11 +60,13 @@ namespace moosik.api.Controllers
         [HttpGet("{id:int}")]
         public IActionResult GetUserById([FromRoute]int id)
         {
-            var context = new MoosikContext();
-
-            var user = context.Users.Single(x => x.Id == id);
-
-            return Ok(user);
+            // var context = new MoosikContext();
+            //
+            // var user = context.Users.Single(x => x.Id == id);
+            //
+            // return Ok(user);
+            _service.GetUserById(id);
+            return Ok();
         }
         
         /// <summary>
@@ -84,11 +90,13 @@ namespace moosik.api.Controllers
         [HttpGet("GetUserByUsernameAndEmail",Name = "GetUserByUsernameAndEmail")]
         public IActionResult GetUserByUsernameAndEmail([FromQuery]string username, [FromQuery]string email)
         {
-            var context = new MoosikContext();
-
-            var user = context.Users.Single(x => x.Username == username && x.Email == email);
-
-            return Ok(user);
+            // var context = new MoosikContext();
+            //
+            // var user = context.Users.Single(x => x.Username == username && x.Email == email);
+            //
+            // return Ok(user);
+            _service.GetUserByUsernameAndEmail(username, email);
+            return Ok();
         }
 
         /// <summary>
@@ -118,16 +126,18 @@ namespace moosik.api.Controllers
         [HttpPut(Name = "UpdateUser")]
         public IActionResult UpdateUser([FromBody] UserViewModel userViewModelDto)
         {
-            var context = new MoosikContext();
-
-            var user = context.Users.Find(userViewModelDto.Id);
-
-            user.Username = userViewModelDto.Username;
-            user.Email = userViewModelDto.Email;
-
-            context.SaveChanges();
-
-            return Ok(user);
+            // var context = new MoosikContext();
+            //
+            // var user = context.Users.Find(userViewModelDto.Id);
+            //
+            // user.Username = userViewModelDto.Username;
+            // user.Email = userViewModelDto.Email;
+            //
+            // context.SaveChanges();
+            //
+            // return Ok(user);
+            //_service.UpdateUser(userViewModel);
+            return Ok();
         }
 
         /// <summary>
@@ -154,17 +164,19 @@ namespace moosik.api.Controllers
         [HttpPost(Name = "CreateUser")]
         public IActionResult CreateUser([FromBody] UserViewModel userViewModelDto)
         {
-            var context = new MoosikContext();
-
-            context.Users.Add(new User
-            {
-                Username = userViewModelDto.Username,
-                Email = userViewModelDto.Email,
-                Active = true
-            });
-
-            context.SaveChanges();
-
+            // var context = new MoosikContext();
+            //
+            // context.Users.Add(new User
+            // {
+            //     Username = userViewModelDto.Username,
+            //     Email = userViewModelDto.Email,
+            //     Active = true
+            // });
+            //
+            // context.SaveChanges();
+            //
+            // return Ok();
+            //_service.CreateUser(userviewmodel);
             return Ok();
         }
 
@@ -179,14 +191,16 @@ namespace moosik.api.Controllers
         [HttpDelete("{id:int}", Name = "DeleteUserById")]
         public IActionResult DeleteUserById([FromRoute] int id)
         {
-            var context = new MoosikContext();
-
-            var user = context.Users.Find(id);
-
-            user.Active = false;
-
-            context.SaveChanges();
-            
+            // var context = new MoosikContext();
+            //
+            // var user = context.Users.Find(id);
+            //
+            // user.Active = false;
+            //
+            // context.SaveChanges();
+            //
+            // return Ok();
+            _service.DeleteUser(id);
             return Ok();
         }
         

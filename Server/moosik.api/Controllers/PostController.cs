@@ -1,12 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Mime;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using moosik.api.Contexts;
 using moosik.api.ViewModels;
+using moosik.services.Interfaces;
 
 namespace moosik.api.Controllers
 {
@@ -14,10 +9,14 @@ namespace moosik.api.Controllers
     [ApiController]
     public class PostController : ControllerBase
     {
+        private readonly IPostService _service;
+        public PostController(IPostService service) => _service = service;
+        
         /// <summary>
-        /// Returns a list of all post object
+        /// Returns a list of all post object. Filters posts matching threadId if provided.
+        /// <param name="threadId"></param>
         /// </summary>
-        /// <returns>A list of all post objects</returns>
+        /// <returns>A list of PostViewModels</returns>
         /// <response code="200">Success - List has been successfully returned</response>
         /// <response code="400">Bad Request - Check input values</response>
         /// <response code="404">Not Found - No such list exists</response>
@@ -29,17 +28,7 @@ namespace moosik.api.Controllers
         [HttpGet]
         public IActionResult GetAllPost([FromQuery]int? threadId = null)
         {
-            var context = new MoosikContext();
-
-            var posts = context.Posts.AsQueryable();
-            
-            //Begin filtering provided a valid query has been provided
-
-            if (threadId != null)
-            {
-                posts = posts.Where(x => x.ThreadId == threadId);
-            }
-            
+            var posts = _service.GetAllPosts(threadId);
             return Ok(posts.ToList());
         }
         
@@ -64,11 +53,8 @@ namespace moosik.api.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public IActionResult GetPostById([FromRoute] int id)
         {
-            var context = new MoosikContext();
-
-            var post = context.Posts.Find(id);
-
-            return Ok(post);
+            _service.GetPostById(id);
+            return Ok();
         }
         /// <summary>
         /// Returns all Post objects that occur after the provided date
@@ -91,11 +77,8 @@ namespace moosik.api.Controllers
         [HttpGet("GetAfterDate")]
         public IActionResult GetPostsAfterDate([FromQuery] DateTime date)
         {
-            var context = new MoosikContext();
-
-            var posts = context.Posts.Where(x => x.CreatedDate > date).ToList();
-
-            return Ok(posts);
+            _service.GetPostsAfterDate(date);
+            return Ok();
         }
 
         /// <summary>
@@ -127,17 +110,8 @@ namespace moosik.api.Controllers
         [HttpPut(Name = "UpdatePost")]
         public IActionResult UpdatePost([FromBody] PostViewModel postViewModelDto)
         {
-            var context = new MoosikContext();
-
-            var post = context.Posts.Find(postViewModelDto.Id);
-
-            post.Description = postViewModelDto.Description;
-            post.UserId = postViewModelDto.UserId;
-            post.ThreadId = postViewModelDto.ThreadId;
-
-            context.SaveChanges();
-
-            return Ok(post);
+            //_service.UpdatePost(postViewModelDto);
+            return Ok();
         }
 
         /// <summary>
@@ -168,27 +142,29 @@ namespace moosik.api.Controllers
         [HttpPost]
         public IActionResult CreatePost([FromBody] CreatePostViewModel createPostViewModel)
         {
-            using var context = new MoosikContext();
-
-            var postResource = context.PostResources.Add(new PostResource()
-            {
-                Title = createPostViewModel.PostResourceTitle,
-                Value = createPostViewModel.PostResourceValue,
-                ResourceTypeId = createPostViewModel.ResourceTypeId
-            }).Entity;
-
-            var post = context.Posts.Add(new Post()
-            {
-                Description = createPostViewModel.Description,
-                CreatedDate = DateTime.UtcNow,
-                Active = true,
-                UserId = createPostViewModel.UserId,
-                ThreadId = createPostViewModel.ThreadId,
-                PostResources = new List<PostResource>() {postResource}
-            });
-
-            context.SaveChanges();
-
+            // using var context = new MoosikContext();
+            //
+            // var postResource = context.PostResources.Add(new PostResource()
+            // {
+            //     Title = createPostViewModel.PostResourceTitle,
+            //     Value = createPostViewModel.PostResourceValue,
+            //     ResourceTypeId = createPostViewModel.ResourceTypeId
+            // }).Entity;
+            //
+            // var post = context.Posts.Add(new Post()
+            // {
+            //     Description = createPostViewModel.Description,
+            //     CreatedDate = DateTime.UtcNow,
+            //     Active = true,
+            //     UserId = createPostViewModel.UserId,
+            //     ThreadId = createPostViewModel.ThreadId,
+            //     PostResources = new List<PostResource>() {postResource}
+            // });
+            //
+            // context.SaveChanges();
+            //
+            // return Ok();
+            //_service.CreatePost(createPostViemModel);
             return Ok();
         }
         
@@ -203,7 +179,8 @@ namespace moosik.api.Controllers
         [HttpDelete("{id:int}")]
         public IActionResult DeletePost([FromRoute] int id)
         {
-            throw new NotImplementedException();
+            _service.DeletePost(id);
+            return Ok();
         }
 
         /// <summary>
@@ -220,11 +197,13 @@ namespace moosik.api.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public IActionResult GetAllResourceTypes()
         {
-            using var context = new MoosikContext();
-
-            var types = context.ResourceTypes.Distinct();
-
-            return Ok(types.ToList());
+            // using var context = new MoosikContext();
+            //
+            // var types = context.ResourceTypes.Distinct();
+            //
+            // return Ok(types.ToList());
+            _service.GetAllResourceTypes();
+            return Ok();
         }
     }
 }
