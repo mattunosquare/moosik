@@ -1,18 +1,17 @@
 using System.Reflection;
+using System.Text;
 using System.Text.Json.Serialization;
 using FluentValidation.AspNetCore;
 using MicroElements.Swashbuckle.FluentValidation.AspNetCore;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using moosik.api.ViewModels;
-using moosik.api.ViewModels.Validators;
+using moosik.api.Authentication.Interfaces;
+using moosik.api.Authentication.Services;
+using moosik.api.ViewModels.Validators.User;
 using moosik.dal.Contexts;
-using moosik.services.Dtos;
 using moosik.services.Interfaces;
-using moosik.services.Mapping;
 using moosik.services.Services;
-using Thread = moosik.dal.Contexts.Thread;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -41,27 +40,45 @@ builder.Services.AddSwaggerGen(options =>
     
 });
 
+builder.Services.AddAuthentication(x =>
+{
+    x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(o =>
+{
+    var key = Encoding.UTF8.GetBytes(builder.Configuration["JWT:Key"]);
+    o.SaveToken = true;
+    o.TokenValidationParameters = new TokenValidationParameters()
+    {
+        ValidateIssuer = false,
+        ValidateAudience = false,
+        ValidateLifetime = true,
+        ClockSkew = TimeSpan.Zero,
+        ValidateIssuerSigningKey = true,
+        ValidIssuer = builder.Configuration["JWT:Issuer"],
+        ValidAudience = builder.Configuration["JWT:Audience"],
+        IssuerSigningKey = new SymmetricSecurityKey(key)
+    };
+});
+
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("ValidAccessToken", policy =>
+    {
+        policy.AuthenticationSchemes.Add(JwtBearerDefaults.AuthenticationScheme);
+        policy.RequireAuthenticatedUser();
+    });
+});
+
+
 builder.Services.AddTransient<IThreadService, ThreadService>();
 builder.Services.AddTransient<IPostService, PostService>();
 builder.Services.AddTransient<IUserService, UserService>();
+builder.Services.AddTransient<IAuthenticationService, AuthenticationService>();
+builder.Services.AddTransient<ITokenService, TokenService>();
 
-builder.Services.AddAutoMapper(cfg =>
-{
-    // cfg.AddProfile<EntityDtoMappingProfile>();
-    //cfg.AddProfile<ViewModelDtoMappingProfile>();
-     cfg.CreateMap<Post, PostDto>();
-     cfg.CreateMap<PostResource, PostResourceDto>();
-     cfg.CreateMap<ResourceType, ResourceTypeDto>();
-     cfg.CreateMap<Thread, ThreadDto>();
-     cfg.CreateMap<ICollection<Thread>, ICollection<ThreadDto>>();
-    
-     cfg.CreateMap<ThreadType, ThreadTypeDto>();
-     cfg.CreateMap<ICollection<ThreadType>, ICollection<ThreadTypeDto>>();
-     cfg.CreateMap<List<ThreadTypeDto>, List<ThreadTypeViewModel>>();
-    
-     cfg.CreateMap<User, UserDto>();
-     cfg.CreateMap<ICollection<ThreadDto>, ICollection<ThreadViewModel>>();
-});
+
+builder.Services.AddAutoMapper(config => config.AllowNullCollections = true, typeof(Program).Assembly);
 
 
 builder.Services.AddFluentValidationRulesToSwagger();
@@ -92,6 +109,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

@@ -1,7 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
 using AutoMapper;
 using moosik.dal.Contexts;
+using moosik.dal.Models;
 using moosik.services.Dtos;
+using moosik.services.Exceptions;
 using moosik.services.Interfaces;
 
 namespace moosik.services.Services;
@@ -11,39 +16,74 @@ public class UserService : IUserService
     private readonly MoosikContext _database;
     private readonly IMapper _mapper;
 
-    public UserService(MoosikContext database, IMapper mapper)
+    public UserService(MoosikContext database, IMapper mapper) => (_database,_mapper) = (database, mapper);
+
+    public UserDto[] GetAllUsers(int? userId)
     {
-        _database = database;
-        _mapper = mapper;
+        Expression<Func<User, bool>> returnAll = u => true;
+        Expression<Func<User, bool>> returnSingle = u => u.Id == userId;
+        var filterUserById = userId >= 0 ? returnSingle : returnAll;
+
+        return _mapper.ProjectTo<UserDto>(
+                _database.Get<User>()
+                    .Where(filterUserById))
+            .ToArray();
     }
 
-    public ICollection<UserDto> GetAllUsers(int? userId)
+    public UserDetailDto GetUserById(int userId)
     {
-        throw new System.NotImplementedException();
-    }
-
-    public UserDto GetUserById(int userId)
-    {
-        throw new System.NotImplementedException();
+        return _mapper.ProjectTo<UserDetailDto>(
+                _database.Get<User>()
+                    .Where(u => u.Id == userId))
+            .SingleOrDefault();
     }
 
     public UserDto GetUserByUsernameAndEmail(string username, string email)
     {
-        throw new System.NotImplementedException();
+        return _mapper.ProjectTo<UserDto>(
+                _database.Get<User>()
+                    .Where(u => u.Username == username && u.Email == email))
+            .SingleOrDefault();
     }
 
-    public void UpdateUser(UserDto user)
+    public void UpdateUser(UpdateUserDto updateUser)
     {
-        throw new System.NotImplementedException();
+        var existingUser = RetrieveUserForId(updateUser.Id).SingleOrDefault();
+
+        if (existingUser == null)
+        {
+            throw new NotFoundException($"No user found for id: {updateUser.Id}");
+        }
+
+        _mapper.Map(updateUser, existingUser);
+        _database.SaveChanges();
     }
 
-    public void CreateUser(UserDto user)
+    public void CreateUser(CreateUserDto createUserDto)
     {
-        throw new System.NotImplementedException();
+        var user = _mapper.Map<User>(createUserDto);
+        
+        _database.Add(_mapper.Map<User>(user));
+        _database.SaveChanges();
     }
 
     public void DeleteUser(int userId)
     {
-        throw new System.NotImplementedException();
+        var user = RetrieveUserForId(userId).SingleOrDefault();
+
+        if (user == null)
+        {
+            throw new NotFoundException($"No user found with userId: {userId}");
+        }
+
+        user.Active = false;
+        _database.SaveChanges();
+    }
+
+    public IQueryable<User> RetrieveUserForId(int userId)
+    {
+        return _database
+            .Get<User>()
+            .Where(u => u.Id == userId);
     }
 }

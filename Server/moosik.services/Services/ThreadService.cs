@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using moosik.dal.Contexts;
+using moosik.dal.Models;
 using moosik.services.Dtos;
+using moosik.services.Exceptions;
 using moosik.services.Interfaces;
 namespace moosik.services.Services;
 
@@ -19,55 +22,78 @@ public class ThreadService : IThreadService
         _mapper = mapper;
     }
     
-    public ICollection<ThreadDto> GetAllThreads(int? userId)
+    public ThreadDto[] GetAllThreads(int? userId)
     {
-        var threads = _database.Threads
-            .Include(t => t.Posts)
-            .Include(t => t.User)
-            .Include(t => t.ThreadType)
-            .AsQueryable();
+        Expression<Func<Thread, bool>> returnAll = t => true;
+        Expression<Func<Thread, bool>> returnSingle = t => t.Id == userId;
+        var filterThreadByUserId = userId >= 0 ? returnSingle : returnAll; 
 
-        //Filter down if a userId has been provided
-
-        if (userId != null)
-        {
-            threads = threads.Where(t => t.Id == userId);
-        }
-
-        var threadDtos = _mapper.Map<ICollection<ThreadDto>>(threads);
-        return threadDtos;
+        return _mapper.ProjectTo<ThreadDto>(
+                _database.Get<Thread>()
+                    .Where(filterThreadByUserId))
+            .ToArray();
     }
 
     public ThreadDto GetThreadById(int threadId)
     {
-        throw new NotImplementedException();
+        return _mapper.ProjectTo<ThreadDto>(
+            _database.Get<Thread>()
+                .Where(thread => thread.Id == threadId))
+            .SingleOrDefault();
     }
 
-    public ICollection<ThreadDto> GetThreadsAfterDate(DateTime date)
+    public ThreadDto[] GetThreadsAfterDate(DateTime date)
     {
-        throw new NotImplementedException();
+        return _mapper.ProjectTo<ThreadDto>(
+                _database.Get<Thread>()
+                    .Where(thread => thread.CreatedDate > date))
+            .ToArray();
     }
 
-    public void UpdateThread(ThreadDto thread)
+    public void UpdateThread(UpdateThreadDto updateThreadDto)
     {
-        throw new NotImplementedException();
+        var existingThread = RetrieveThreadForId(updateThreadDto.Id).SingleOrDefault();
+
+        if (existingThread == null)
+        {
+            throw new NotFoundException($"No thread found for thread with id: {updateThreadDto.Id}");
+        }
+
+        _mapper.Map(updateThreadDto, existingThread);
+        _database.SaveChanges();
     }
 
-    public void CreateThread(ThreadDto thread)
+    public void CreateThread(CreateThreadDto createThread)
     {
-        throw new NotImplementedException();
+        var thread = _mapper.Map<Thread>(createThread);
+        _database.Add(thread);
+        _database.SaveChanges();
     }
 
-    public void DeleteThreadById(int threadId)
+    public void DeleteThread(int threadId)
     {
-        throw new NotImplementedException();
+        var thread = RetrieveThreadForId(threadId).SingleOrDefault();
+
+        if (thread == null)
+        {
+            throw new NotFoundException($"No thread found for threadId: {threadId}");
+        }
+
+        thread.Active = false;
+        _database.SaveChanges();
     }
 
-    public ICollection<ThreadTypeDto> GetAllThreadTypes()
+    public IQueryable<Thread> RetrieveThreadForId(int threadId)
     {
-        var threadTypes = _database.ThreadTypes.AsQueryable();
+        return _database
+            .Get<Thread>()
+            .Where(t => t.Id == threadId);
+    }
 
-        var threadTypesDto = _mapper.Map<ICollection<ThreadTypeDto>>(threadTypes).ToList();
-        return threadTypesDto;
+    public ThreadTypeDto[] GetAllThreadTypes()
+    {
+        return _mapper.ProjectTo<ThreadTypeDto>(
+                _database.Get<ThreadType>())
+            .ToArray();
     }
 }

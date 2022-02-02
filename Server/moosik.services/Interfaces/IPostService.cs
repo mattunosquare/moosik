@@ -1,17 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
-using moosik.dal.Contexts;
+using System.Linq;
+using moosik.dal.Models;
 using moosik.services.Dtos;
 
 namespace moosik.services.Interfaces;
 
 public interface IPostService
 {
-    ICollection<PostDto> GetAllPosts(int? threadId);
+    PostDto[] GetAllPosts(int? threadId);
     PostDto GetPostById(int postId);
     ICollection<PostDto> GetPostsAfterDate(DateTime date);
-    void UpdatePost(PostDto post);
-    void CreatePost(PostDto post);
+    void UpdatePost(UpdatePostDto updatePostDto);
+    void CreatePost(CreatePostDto post);
     void DeletePost(int postId);
-    ICollection<ResourceType> GetAllResourceTypes();
+    void UpdatePostResource(UpdatePostResourceDto updatePostResourceDto);
+    ResourceTypeDto[] GetAllResourceTypes();
+    public IQueryable<Post> RetrievePostForId(int postId);
+    public IQueryable<PostResource> RetrievePostResourceForId(int postResourceId);
 }

@@ -1,6 +1,10 @@
 using System.Net.Mime;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using moosik.api.Authorization;
 using moosik.api.ViewModels;
+using moosik.services.Dtos;
+using moosik.services.Exceptions;
 using moosik.services.Interfaces;
 
 namespace moosik.api.Controllers
@@ -10,7 +14,9 @@ namespace moosik.api.Controllers
     public class PostController : ControllerBase
     {
         private readonly IPostService _service;
-        public PostController(IPostService service) => _service = service;
+        private readonly IMapper _mapper; 
+        public PostController(IPostService service, IMapper mapper) => (_service, _mapper) = (service, mapper);
+        
         
         /// <summary>
         /// Returns a list of all post object. Filters posts matching threadId if provided.
@@ -22,20 +28,20 @@ namespace moosik.api.Controllers
         /// <response code="404">Not Found - No such list exists</response>
         [Consumes(MediaTypeNames.Application.Json)]
         [Produces("application/json")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<PostViewModel>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PostViewModel[]))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [HttpGet]
         public IActionResult GetAllPost([FromQuery]int? threadId = null)
         {
             var posts = _service.GetAllPosts(threadId);
-            return Ok(posts.ToList());
+            return Ok(_mapper.Map<PostViewModel[]>(posts));
         }
         
         /// <summary>
-        /// Finds the post matching a given PostId
+        /// Finds the post matching a given postId
         /// </summary>
-        /// <param name="id" example = "2"></param>
+        /// <param name="postId" example = "2"></param>
         /// <remarks>
         /// Sample request:
         ///     URL: www.moosik.com/post/2
@@ -45,16 +51,16 @@ namespace moosik.api.Controllers
         /// <response code="400">Bad Request - Check input values</response>
         /// <response code="404">Not Found - Given Post does not exist</response>
         /// <exception cref="NotImplementedException"></exception>
-        [HttpGet("{id:int}", Name = "GetPostById")]
+        [HttpGet("{postId:int}", Name = "GetPostById")]
         [Consumes(MediaTypeNames.Application.Json)]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PostViewModel))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public IActionResult GetPostById([FromRoute] int id)
+        public IActionResult GetPostById([FromRoute] int postId)
         {
-            _service.GetPostById(id);
-            return Ok();
+            var post = _service.GetPostById(postId);
+            return Ok(_mapper.Map<PostViewModel>(post));
         }
         /// <summary>
         /// Returns all Post objects that occur after the provided date
@@ -71,139 +77,143 @@ namespace moosik.api.Controllers
         /// <exception cref="NotImplementedException"></exception>
         [Consumes(MediaTypeNames.Application.Json)]
         [Produces("application/json")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<PostViewModel>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PostViewModel[]))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [HttpGet("GetAfterDate")]
         public IActionResult GetPostsAfterDate([FromQuery] DateTime date)
         {
-            _service.GetPostsAfterDate(date);
-            return Ok();
+            var posts = _service.GetPostsAfterDate(date);
+            return Ok(_mapper.Map<PostViewModel[]>(posts));
         }
 
         /// <summary>
-        /// Updates the Post object matching the provided PostId of the request body object, returns the newly updated object
+        /// Updates the Post object matching the provided postId with the data provided in the body.
         /// </summary>
-        /// <param name="postViewModelDto"></param>
+        /// <param name="updatePostViewModel"></param>
+        /// <param name="postId"></param>
         /// <remarks>
         /// Sample request:
         /// 
         ///     Body:
         ///     {
-        ///         id: 1,
-        ///         description: "Cool Song",
-        ///         userId: 4,
-        ///         threadId: 7,
-        ///         createdDate: "2008-10-31T17:04:32"
+        ///         description: "Cool Song"
         ///     }
         /// </remarks>
-        /// <returns>Post object if it has been updated, otherwise error code</returns>
-        /// <response code="200">Success - Post has been successfully updated</response>
-        /// <response code="400">Bad Request - Check input values</response>
-        /// <response code="404">Not Found - No such Post exists to update</response>
-        /// <exception cref="NotImplementedException"></exception>
+        /// <returns>No content returned</returns>
+        /// <response code="204">No content returned</response>
+        /// <exception cref="NotFoundException"></exception>
         [Consumes(MediaTypeNames.Application.Json)]
         [Produces("application/json")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PostViewModel))]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [HttpPut(Name = "UpdatePost")]
-        public IActionResult UpdatePost([FromBody] PostViewModel postViewModelDto)
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [HttpPut]
+        [Route("{postId:int:min(1)}")]
+        public IActionResult UpdatePost(int postId, [FromBody] UpdatePostViewModel updatePostViewModel)
         {
-            //_service.UpdatePost(postViewModelDto);
-            return Ok();
+            var updatePostDto = _mapper.Map<UpdatePostDto>(updatePostViewModel);
+            updatePostDto.Id = postId;
+            
+            _service.UpdatePost(updatePostDto);
+            
+            return NoContent();
         }
 
         /// <summary>
-        /// Creates a new Post using the provided Post object
+        /// Creates a new Post on the provided threadId in the route.
         /// </summary>
         /// <remarks>
         /// Sample request:
         ///
         ///     Body:
         ///     {
-        ///            "ThreadId": 1,
-        ///            "UserId": 7,
-        ///            "Description": "REPLY FROM POSTMAN",
-        ///            "PostResourceTitle": "MY PR TITLE",
-        ///            "PostResourceValue": "MY PR VALUE",
-        ///            "ResourceTypeId": 1
+        ///         UserId: 7,
+        ///         Description: "Check this song out",
+        ///         Resource:{
+        ///             Title: "Hey Jude",
+        ///             Value: "youtube.com/heyjude",
+        ///             TypeId: 1
+        ///         }       
         ///     }
         /// </remarks>
         /// <param name="createPostViewModel"></param>
-        /// <returns>Newly created Post provided it has been created, otherwise an error code</returns>
-        /// <response code="201">Success - Post has been successfully created</response>
-        /// <response code="400">Bad Request - Check input values</response>
-        /// <exception cref="NotImplementedException"></exception>
+        /// <param name="threadId" example="1" ></param>
+        /// <returns>Newly created Post, provided it has been created, otherwise an error code</returns>
+        /// <response code="204">No content returned</response>
         [Consumes(MediaTypeNames.Application.Json)]
         [Produces("application/json")]
-        [ProducesResponseType(StatusCodes.Status201Created)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         [HttpPost]
-        public IActionResult CreatePost([FromBody] CreatePostViewModel createPostViewModel)
+        [Route("{threadId:int:min(1)}")]
+        public IActionResult CreatePost([FromBody] CreatePostViewModel createPostViewModel, int threadId)
         {
-            // using var context = new MoosikContext();
-            //
-            // var postResource = context.PostResources.Add(new PostResource()
-            // {
-            //     Title = createPostViewModel.PostResourceTitle,
-            //     Value = createPostViewModel.PostResourceValue,
-            //     ResourceTypeId = createPostViewModel.ResourceTypeId
-            // }).Entity;
-            //
-            // var post = context.Posts.Add(new Post()
-            // {
-            //     Description = createPostViewModel.Description,
-            //     CreatedDate = DateTime.UtcNow,
-            //     Active = true,
-            //     UserId = createPostViewModel.UserId,
-            //     ThreadId = createPostViewModel.ThreadId,
-            //     PostResources = new List<PostResource>() {postResource}
-            // });
-            //
-            // context.SaveChanges();
-            //
-            // return Ok();
-            //_service.CreatePost(createPostViemModel);
-            return Ok();
+            var createPostDto = _mapper.Map<CreatePostDto>(createPostViewModel);
+            createPostDto.ThreadId = threadId;
+            
+            _service.CreatePost(createPostDto);
+            return NoContent();
         }
         
         /// <summary>
-        /// Deletes the Post matching the provided PostId
+        /// Deletes(sets 'Active' property to false) the Post matching the provided postId
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
+        /// <param name="postId"></param>
+        /// <returns>No content returned</returns>
+        /// <exception cref="NotFoundException"></exception>
         [Consumes(MediaTypeNames.Application.Json)]
         [Produces("application/json")]
-        [HttpDelete("{id:int}")]
-        public IActionResult DeletePost([FromRoute] int id)
+        [HttpDelete("{postId:int:min(1)}")]
+        public IActionResult DeletePost([FromRoute] int postId)
         {
-            _service.DeletePost(id);
-            return Ok();
+            _service.DeletePost(postId);
+            return NoContent();
         }
 
         /// <summary>
-        /// Get all ResourceTypes
+        /// Updates the PostResource object matching the provided postResourceId with the data provided in the body.
         /// </summary>
-        /// <returns>List of all ResourceTypes</returns>
-        /// <response code="200">Success - List of ResourceTypes successfully return</response>
-        /// <response code="404">Not Found - No such list exists</response>
-        /// <exception cref="NotImplementedException"></exception>
-        [HttpGet("resourcetypes")]
+        /// <param name="updatePostResourceViewModel"></param>
+        /// <param name="postResourceId"></param>
+        /// <remarks>
+        /// Sample request:
+        /// 
+        ///     Body:
+        ///     {
+        ///         Title: "Enter Sandman",
+        ///         Value: "youtube.com/enterSandman"
+        ///     }
+        /// </remarks>
+        /// <returns>No content returned</returns>
+        /// <response code="204">No content returned</response>
+        /// <exception cref="NotFoundException"></exception>
         [Consumes(MediaTypeNames.Application.Json)]
         [Produces("application/json")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<ResourceTypeViewModel>))]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [HttpPut]
+        [Route("resources/{postResourceId:int:min(1)}")]
+        public IActionResult UpdatePostResource(int postResourceId, [FromBody] UpdatePostResourceViewModel updatePostResourceViewModel)
+        {
+            var updatePostResourceDto = _mapper.Map<UpdatePostResourceDto>(updatePostResourceViewModel);
+            updatePostResourceDto.Id = postResourceId;
+            
+            _service.UpdatePostResource(updatePostResourceDto);
+            return NoContent();
+        }
+        
+        /// <summary>
+        /// Get all ResourceTypes
+        /// </summary>
+        /// <returns>An array of all ResourceTypeViewModels</returns>
+        /// <response code="200">Success - Array of all ResourceTypeViewModels returned</response>
+        /// <response code="404">Not Found - No such list exists</response>
+        [HttpGet("resourceTypes")]
+        [Consumes(MediaTypeNames.Application.Json)]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResourceTypeViewModel[]))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public IActionResult GetAllResourceTypes()
         {
-            // using var context = new MoosikContext();
-            //
-            // var types = context.ResourceTypes.Distinct();
-            //
-            // return Ok(types.ToList());
-            _service.GetAllResourceTypes();
-            return Ok();
+            var resourceTypesDto = _service.GetAllResourceTypes();
+            return Ok(_mapper.Map<ResourceTypeViewModel[]>(resourceTypesDto));
         }
     }
 }
