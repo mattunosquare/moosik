@@ -1,11 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "UcVyDh7kr5c5wUtC33KTT8MPXTKtbZ3vZkBL36ouZkc+puLsSP0NuzIurBzEtCweIgiGCpZrmFmXQoD5PMM3SQ==",
+  "dgSpecHash": "Wq2gochLgJphQx6RYcFYwVK5nsbjNKo6nr+STcWpAwh0+ToTZl74I7hD8jjniQQwzJhIewpkW8HutqVJbUNx2g==",
   "success": true,
   "projectFilePath": "C:\\Users\\matt.mccleave\\Documents\\Github\\Moosik\\Server\\moosik.api\\moosik.api.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\matt.mccleave\\.nuget\\packages\\automapper\\11.0.0\\automapper.11.0.0.nupkg.sha512",
     "C:\\Users\\matt.mccleave\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\11.0.0\\automapper.extensions.microsoft.dependencyinjection.11.0.0.nupkg.sha512",
+    "C:\\Users\\matt.mccleave\\.nuget\\packages\\bcrypt.net-next\\4.0.2\\bcrypt.net-next.4.0.2.nupkg.sha512",
     "C:\\Users\\matt.mccleave\\.nuget\\packages\\fluentvalidation\\10.3.4\\fluentvalidation.10.3.4.nupkg.sha512",
     "C:\\Users\\matt.mccleave\\.nuget\\packages\\fluentvalidation.aspnetcore\\10.3.4\\fluentvalidation.aspnetcore.10.3.4.nupkg.sha512",
     "C:\\Users\\matt.mccleave\\.nuget\\packages\\fluentvalidation.dependencyinjectionextensions\\10.3.4\\fluentvalidation.dependencyinjectionextensions.10.3.4.nupkg.sha512",

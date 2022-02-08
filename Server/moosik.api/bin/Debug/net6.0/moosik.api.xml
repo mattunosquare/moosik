@@ -11,18 +11,24 @@
             <param name="authenticationRequestViewModel"></param>
             <returns>The authenticated user with a generated JWT token</returns>
             <response code="200">Success - AuthenticationResponseViewModel successfully returned</response>
-            <response code="400">Bad Request - Check input values</response>
-            <response code="404">Not Found</response>
+            <response code="401">Unauthorized</response>
+        </member>
+        <member name="M:moosik.api.Controllers.AuthenticationController.Refresh">
+            <summary>
+            Returns the authenticated user with a generated JWT token.
+            </summary>
+            <returns>The authenticated user with a generated JWT token</returns>
+            <response code="200">Success - AuthenticationResponseViewModel successfully returned</response>
+            <response code="401">Unauthorized</response>
         </member>
         <member name="M:moosik.api.Controllers.PostController.GetAllPost(System.Nullable{System.Int32})">
             <summary>
             Returns a list of all post object. Filters posts matching threadId if provided.
             <param name="threadId"></param>
             </summary>
-            <returns>A list of PostViewModels</returns>
-            <response code="200">Success - List has been successfully returned</response>
-            <response code="400">Bad Request - Check input values</response>
-            <response code="404">Not Found - No such list exists</response>
+            <returns>An array of PostViewModel. Array may be empty.</returns>
+            <response code="200">Success - Array has been successfully returned</response>
+            <response code="204">No Content - The returned PostViewModel array is empty as no such array exists that matches the arguments</response>
         </member>
         <member name="M:moosik.api.Controllers.PostController.GetPostById(System.Int32)">
             <summary>
@@ -32,12 +38,10 @@
             <remarks>
             Sample request:
                 URL: www.moosik.com/post/2
-            </remarks>
+            </remarks>z
             <returns>Post object matching the given id parameter</returns>
             <response code="200">Success - Post has been successfully returned</response>
-            <response code="400">Bad Request - Check input values</response>
-            <response code="404">Not Found - Given Post does not exist</response>
-            <exception cref="T:System.NotImplementedException"></exception>
+            <response code="204">No Content - Request successfully performed, however no Post exists for the given arguments</response>
         </member>
         <member name="M:moosik.api.Controllers.PostController.GetPostsAfterDate(System.DateTime)">
             <summary>
@@ -50,9 +54,7 @@
             </remarks>
             <returns>List of Post objects containing all Posts that occur after a provided date</returns>
             <response code="200">Success - List of Posts has been successfully returned</response>
-            <response code="400">Bad Request - Check input values</response>
-            <response code="404">Not Found - No such list exists</response>
-            <exception cref="T:System.NotImplementedException"></exception>
+            <response code="204">No Content - Request successfully performed, however no Post exists for the given arguments</response>
         </member>
         <member name="M:moosik.api.Controllers.PostController.UpdatePost(System.Int32,moosik.api.ViewModels.UpdatePostViewModel)">
             <summary>
@@ -70,7 +72,6 @@
             </remarks>
             <returns>No content returned</returns>
             <response code="204">No content returned</response>
-            <exception cref="T:moosik.services.Exceptions.NotFoundException"></exception>
         </member>
         <member name="M:moosik.api.Controllers.PostController.CreatePost(moosik.api.ViewModels.CreatePostViewModel,System.Int32)">
              <summary>
@@ -101,7 +102,6 @@
             </summary>
             <param name="postId"></param>
             <returns>No content returned</returns>
-            <exception cref="T:moosik.services.Exceptions.NotFoundException"></exception>
         </member>
         <member name="M:moosik.api.Controllers.PostController.UpdatePostResource(System.Int32,moosik.api.ViewModels.UpdatePostResourceViewModel)">
             <summary>
@@ -120,7 +120,6 @@
             </remarks>
             <returns>No content returned</returns>
             <response code="204">No content returned</response>
-            <exception cref="T:moosik.services.Exceptions.NotFoundException"></exception>
         </member>
         <member name="M:moosik.api.Controllers.PostController.GetAllResourceTypes">
             <summary>
@@ -128,7 +127,7 @@
             </summary>
             <returns>An array of all ResourceTypeViewModels</returns>
             <response code="200">Success - Array of all ResourceTypeViewModels returned</response>
-            <response code="404">Not Found - No such list exists</response>
+            <response code="204">No Content</response>
         </member>
         <member name="M:moosik.api.Controllers.ThreadController.GetAllThreads(System.Nullable{System.Int32})">
             <summary>
@@ -136,19 +135,16 @@
             </summary>
             <returns>An array of all ThreadViewModels. Filters by userId if parameter is provided</returns>
             <response code="200">Success - List of ThreadViewModels has been successfully returned</response>
-            <response code="400">Bad Request - Check input values</response>
-            <response code="404">Not Found - No such list exists</response>
+            <response code="204">No Content</response>
         </member>
         <member name="M:moosik.api.Controllers.ThreadController.GetThreadById(System.Int32)">
             <summary>
             Finds the Thread matching a given threadId
             </summary>
             <param name="threadId"></param>
-            <returns>Thread object matching the given id parameter</returns>
+            <returns>ThreadViewModel matching the given threadId parameter</returns>
             <response code="200">Success - Thread has been successfully returned</response>
-            <response code="400">Bad Request - Check input values</response>
-            <response code="404">Not Found - Given Post does not exist</response>
-            <exception cref="T:System.NotImplementedException"></exception>
+            <response code="204">No Content</response>
         </member>
         <member name="M:moosik.api.Controllers.ThreadController.GetThreadsAfterDate(System.DateTime)">
             <summary>
@@ -161,9 +157,7 @@
             </remarks>
             <returns>List of Thread objects containing all Threads that occur after a provided date</returns>
             <response code="200">Success - List of Threads has been successfully returned</response>
-            <response code="400">Bad Request - Check input values</response>
-            <response code="404">Not Found - No such list exists</response>
-            <exception cref="T:System.NotImplementedException"></exception>
+            <response code="204">No Content</response>
         </member>
         <member name="M:moosik.api.Controllers.ThreadController.UpdateThread(System.Int32,moosik.api.ViewModels.Thread.UpdateThreadViewModel)">
              <summary>
@@ -225,7 +219,7 @@
             </summary>
             <returns>An array of all ThreadTypeViewModels</returns>
             <response code="200">Success - Array of all ThreadTypeViewModels returned</response>
-            <response code="404">Not Found - No such array exists</response>
+            <response code="204">No Content</response>
         </member>
         <member name="M:moosik.api.Controllers.UserController.GetAllUsers(System.Nullable{System.Int32})">
             <summary>
@@ -233,19 +227,16 @@
             </summary>
             <returns>A list containing all users</returns>
             <response code="200">Success - List has been successfully returned</response>
-            <response code="400">Bad Request - Check input values</response>
-            <response code="404">Not Found - No such list exists</response>
+            <response code="204">No Content</response>
         </member>
-        <member name="M:moosik.api.Controllers.UserController.GetUserById(System.Int32)">
+        <member name="M:moosik.api.Controllers.UserController.GetDetailedUserById(System.Int32)">
             <summary>
             Finds the User matching a given userId
             </summary>
             <param name="userId"></param>
             <returns>User object matching the given userId parameter</returns>
             <response code="200">Success - User has been successfully returned</response>
-            <response code="400">Bad Request - Check input values</response>
-            <response code="404">Not Found - Given Post does not exist</response>
-            <exception cref="T:System.NotImplementedException"></exception>
+            <response code="404">Not Found - Given User does not exist</response>
         </member>
         <member name="M:moosik.api.Controllers.UserController.GetUserByUsernameAndEmail(System.String,System.String)">
             <summary>
@@ -258,9 +249,7 @@
             </remarks>
             <returns>User object matching the provided username and email address</returns>
             <response code="200">Success - User has been successfully returned</response>
-            <response code="400">Bad Request - Check input values</response>
             <response code="404">Not Found - No such user matches the provided arguments</response>
-            <exception cref="T:System.NotImplementedException"></exception>
         </member>
         <member name="M:moosik.api.Controllers.UserController.UpdateUser(System.Int32,moosik.api.ViewModels.User.UpdateUserViewModel)">
             <summary>

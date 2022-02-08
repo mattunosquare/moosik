@@ -30,7 +30,7 @@ public class UserService : IUserService
             .ToArray();
     }
 
-    public UserDetailDto GetUserById(int userId)
+    public UserDetailDto GetDetailedUserById(int userId)
     {
         return _mapper.ProjectTo<UserDetailDto>(
                 _database.Get<User>()

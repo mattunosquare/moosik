@@ -267,3 +267,4 @@ C:\Users\matt.mccleave\Documents\Github\moosik\Server\moosik.api\bin\Debug\net6.
 C:\Users\matt.mccleave\Documents\Github\moosik\Server\moosik.api\bin\Debug\net6.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
 C:\Users\matt.mccleave\Documents\Github\moosik\Server\moosik.api\bin\Debug\net6.0\Microsoft.IdentityModel.Tokens.dll
 C:\Users\matt.mccleave\Documents\Github\moosik\Server\moosik.api\bin\Debug\net6.0\System.IdentityModel.Tokens.Jwt.dll
+C:\Users\matt.mccleave\Documents\Github\Moosik\Server\moosik.api\bin\Debug\net6.0\BCrypt.Net-Next.dll

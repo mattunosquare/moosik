@@ -8,6 +8,8 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using moosik.api.Authentication.Interfaces;
 using moosik.api.Authentication.Services;
+using moosik.api.Authorization.Interfaces;
+using moosik.api.Authorization.Services;
 using moosik.api.ViewModels.Validators.User;
 using moosik.dal.Contexts;
 using moosik.services.Interfaces;
@@ -68,6 +70,12 @@ builder.Services.AddAuthorization(options =>
         policy.AuthenticationSchemes.Add(JwtBearerDefaults.AuthenticationScheme);
         policy.RequireAuthenticatedUser();
     });
+    
+    options.AddPolicy("ValidRefreshToken", policy =>
+    {
+        policy.AuthenticationSchemes.Add(JwtBearerDefaults.AuthenticationScheme);
+        policy.RequireAuthenticatedUser();
+    });
 });
 
 
@@ -76,6 +84,7 @@ builder.Services.AddTransient<IPostService, PostService>();
 builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddTransient<IAuthenticationService, AuthenticationService>();
 builder.Services.AddTransient<ITokenService, TokenService>();
+builder.Services.AddScoped<IAuthorizedUserProvider, AuthorizedUserProvider>();
 
 
 builder.Services.AddAutoMapper(config => config.AllowNullCollections = true, typeof(Program).Assembly);

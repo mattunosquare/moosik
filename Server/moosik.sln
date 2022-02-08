@@ -9,6 +9,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "moosik.services", "moosik.s
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "moosik.dal", "moosik.dal\moosik.dal.csproj", "{781B61A4-F9A6-48E7-853A-9F7E5F711E72}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{AD86E7B6-D073-467E-8EEF-E6B0E990775E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "moosik.api.test", "moosik.api.test\moosik.api.test.csproj", "{4E29E9C4-4ADC-4817-968D-DECD835D5EC6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "moosik.services.test", "moosik.services.test\moosik.services.test.csproj", "{9AAF5CF8-2409-4E2A-9202-F7563AE899C5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +36,17 @@ Global
 		{781B61A4-F9A6-48E7-853A-9F7E5F711E72}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{781B61A4-F9A6-48E7-853A-9F7E5F711E72}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{781B61A4-F9A6-48E7-853A-9F7E5F711E72}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4E29E9C4-4ADC-4817-968D-DECD835D5EC6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E29E9C4-4ADC-4817-968D-DECD835D5EC6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4E29E9C4-4ADC-4817-968D-DECD835D5EC6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E29E9C4-4ADC-4817-968D-DECD835D5EC6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9AAF5CF8-2409-4E2A-9202-F7563AE899C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9AAF5CF8-2409-4E2A-9202-F7563AE899C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9AAF5CF8-2409-4E2A-9202-F7563AE899C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9AAF5CF8-2409-4E2A-9202-F7563AE899C5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{4E29E9C4-4ADC-4817-968D-DECD835D5EC6} = {AD86E7B6-D073-467E-8EEF-E6B0E990775E}
+		{9AAF5CF8-2409-4E2A-9202-F7563AE899C5} = {AD86E7B6-D073-467E-8EEF-E6B0E990775E}
 	EndGlobalSection
 EndGlobal

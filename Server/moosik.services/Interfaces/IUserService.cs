@@ -7,8 +7,8 @@ namespace moosik.services.Interfaces;
 
 public interface IUserService
 {
-    UserDto[] GetAllUsers(int? userId);
-    UserDetailDto GetUserById(int userId);
+    UserDto[] GetAllUsers(int? userId = null);
+    UserDetailDto GetDetailedUserById(int userId);
     UserDto GetUserByUsernameAndEmail(string username, string email);
     void UpdateUser(UpdateUserDto user);
     void CreateUser(CreateUserDto user);

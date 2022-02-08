@@ -3,16 +3,19 @@ using Microsoft.AspNetCore.Mvc;
 using moosik.api.ViewModels;
 using moosik.services.Interfaces;
 using AutoMapper;
+using moosik.api.Authorization;
+using moosik.api.Controllers.Base;
 using moosik.api.ViewModels.Thread;
 using moosik.services.Dtos;
 using moosik.services.Exceptions;
-
 
 namespace moosik.api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ThreadController : ControllerBase
+    [RoleAuthorization(MoosikRoles.User)]
+    [TokenAuthorization(TokenTypes.ValidAccessToken)]
+    public class ThreadController : MoosikBaseController
     {
         private readonly IThreadService _service;
         private readonly IMapper _mapper;
@@ -24,39 +27,34 @@ namespace moosik.api.Controllers
         /// </summary>
         /// <returns>An array of all ThreadViewModels. Filters by userId if parameter is provided</returns>
         /// <response code="200">Success - List of ThreadViewModels has been successfully returned</response>
-        /// <response code="400">Bad Request - Check input values</response>
-        /// <response code="404">Not Found - No such list exists</response>
+        /// <response code="204">No Content</response>
         [Consumes(MediaTypeNames.Application.Json)]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ThreadViewModel[]))]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         [HttpGet]
-        public IActionResult GetAllThreads([FromQuery] int? userId = null)
+        public ActionResult<ThreadViewModel[]> GetAllThreads([FromQuery] int? userId = null)
         {
             var threads = _service.GetAllThreads(userId);
-            return Ok(_mapper.Map<ThreadViewModel[]>(threads));
+            return OkOrNoContent(_mapper.Map<ThreadViewModel[]>(threads));
         }
 
         /// <summary>
         /// Finds the Thread matching a given threadId
         /// </summary>
         /// <param name="threadId"></param>
-        /// <returns>Thread object matching the given id parameter</returns>
+        /// <returns>ThreadViewModel matching the given threadId parameter</returns>
         /// <response code="200">Success - Thread has been successfully returned</response>
-        /// <response code="400">Bad Request - Check input values</response>
-        /// <response code="404">Not Found - Given Post does not exist</response>
-        /// <exception cref="NotImplementedException"></exception>
+        /// <response code="204">No Content</response>
         [Consumes(MediaTypeNames.Application.Json)]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ThreadViewModel))]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [HttpGet("{threadId:int}", Name = "GetThreadById")]
-        public IActionResult GetThreadById([FromRoute] int threadId)
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [HttpGet("{threadId:int}")]
+        public ActionResult<ThreadViewModel> GetThreadById([FromRoute] int threadId)
         {
             var thread = _service.GetThreadById(threadId);
-            return Ok(_mapper.Map<ThreadViewModel>(thread));
+            return OkOrNoNotFound(_mapper.Map<ThreadViewModel>(thread));
         }
 
         /// <summary>
@@ -69,19 +67,16 @@ namespace moosik.api.Controllers
         /// </remarks>
         /// <returns>List of Thread objects containing all Threads that occur after a provided date</returns>
         /// <response code="200">Success - List of Threads has been successfully returned</response>
-        /// <response code="400">Bad Request - Check input values</response>
-        /// <response code="404">Not Found - No such list exists</response>
-        /// <exception cref="NotImplementedException"></exception>
+        /// <response code="204">No Content</response>
         [Consumes(MediaTypeNames.Application.Json)]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ThreadViewModel[]))]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [HttpGet("GetAfterDate", Name = "GetThreadsAfterDate")]
-        public IActionResult GetThreadsAfterDate([FromQuery] DateTime date)
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [HttpGet("get-after-date")]
+        public ActionResult<ThreadViewModel[]> GetThreadsAfterDate([FromQuery] DateTime date)
         {
             var threads = _service.GetThreadsAfterDate(date);
-            return Ok(_mapper.Map<ThreadViewModel[]>(threads));
+            return OkOrNoContent(_mapper.Map<ThreadViewModel[]>(threads));
         }
 
         /// <summary>
@@ -105,7 +100,7 @@ namespace moosik.api.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [HttpPut]
         [Route("{threadId:int:min(1)}")]
-        public IActionResult UpdateThread(int threadId, [FromBody] UpdateThreadViewModel updateThreadViewModel)
+        public ActionResult UpdateThread(int threadId, [FromBody] UpdateThreadViewModel updateThreadViewModel)
         {
             var updateThreadDto = _mapper.Map<UpdateThreadDto>(updateThreadViewModel);
             updateThreadDto.Id = threadId;
@@ -145,7 +140,7 @@ namespace moosik.api.Controllers
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [HttpPost]
-        public IActionResult CreateThread([FromBody] CreateThreadViewModel createThreadViewModel)
+        public ActionResult CreateThread([FromBody] CreateThreadViewModel createThreadViewModel)
         {
             _service.CreateThread(_mapper.Map<CreateThreadDto>(createThreadViewModel));
             return NoContent();
@@ -160,7 +155,7 @@ namespace moosik.api.Controllers
         [Consumes(MediaTypeNames.Application.Json)]
         [Produces("application/json")]
         [HttpDelete("{threadId:int:min(1)}")]
-        public IActionResult DeleteThread([FromRoute] int threadId)
+        public ActionResult DeleteThread([FromRoute] int threadId)
         {
             _service.DeleteThread(threadId);
             return NoContent();
@@ -171,16 +166,16 @@ namespace moosik.api.Controllers
         /// </summary>
         /// <returns>An array of all ThreadTypeViewModels</returns>
         /// <response code="200">Success - Array of all ThreadTypeViewModels returned</response>
-        /// <response code="404">Not Found - No such array exists</response>
+        /// <response code="204">No Content</response>
         [Consumes(MediaTypeNames.Application.Json)]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ThreadTypeViewModel[]))]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         [HttpGet("types")]
-        public IActionResult GetAllThreadTypes()
+        public ActionResult<ThreadTypeViewModel[]> GetAllThreadTypes()
         {
             var threadTypes = _service.GetAllThreadTypes();
-            return Ok(_mapper.Map<ThreadTypeViewModel[]>(threadTypes));
+            return OkOrNoContent(_mapper.Map<ThreadTypeViewModel[]>(threadTypes));
         }
     }
 }

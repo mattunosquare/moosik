@@ -3,7 +3,9 @@ using Microsoft.EntityFrameworkCore;
 using moosik.api.Authentication.Interfaces;
 using moosik.dal.Contexts;
 using moosik.dal.Models;
+using moosik.services.Dtos;
 using moosik.services.Dtos.Authentication;
+using BC = BCrypt.Net.BCrypt;
 
 namespace moosik.api.Authentication.Services;
 
@@ -18,13 +20,17 @@ public class AuthenticationService : IAuthenticationService
         _mapper = mapper;
     }
     
-    public AuthenticationResponseDto? Authenticate(AuthenticationRequestDto authenticationRequestDto)
+    public UserDto? Authenticate(AuthenticationRequestDto authenticationRequestDto)
     {
         var user = _database.Get<User>()
             .Include(u => u.Role)
-            .SingleOrDefault(u => u.Username == authenticationRequestDto.Username && u.Password == authenticationRequestDto.Password);
+            .SingleOrDefault(u => u.Username == authenticationRequestDto.Username);
 
-        return user != null ? _mapper.Map<AuthenticationResponseDto>(user) : null;
+        if (user == null || !BC.Verify(authenticationRequestDto.Password, user.Password))
+        {
+            return null;
+        }
+        return _mapper.Map<UserDto>(user);
     }
     
 }

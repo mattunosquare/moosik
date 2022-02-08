@@ -2,6 +2,7 @@ using System.Net.Mime;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using moosik.api.Authorization;
+using moosik.api.Controllers.Base;
 using moosik.api.ViewModels.User;
 using moosik.services.Dtos;
 using moosik.services.Exceptions;
@@ -11,8 +12,9 @@ namespace moosik.api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [RoleAuthorization(MoosikRoles.User)]
     [TokenAuthorization(TokenTypes.ValidAccessToken)]
-    public class UserController : ControllerBase
+    public class UserController : MoosikBaseController
     {
         private readonly IUserService _service;
         private readonly IMapper _mapper;
@@ -23,19 +25,16 @@ namespace moosik.api.Controllers
         /// </summary>
         /// <returns>A list containing all users</returns>
         /// <response code="200">Success - List has been successfully returned</response>
-        /// <response code="400">Bad Request - Check input values</response>
-        /// <response code="404">Not Found - No such list exists</response>
+        /// <response code="204">No Content</response>
         [Consumes(MediaTypeNames.Application.Json)]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UserViewModel[]))]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [RoleAuthorization(MoosikRoles.Admin)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         [HttpGet]
-        public IActionResult GetAllUsers([FromQuery]int? userId = null)
+        public ActionResult<UserViewModel[]> GetAllUsers([FromQuery]int? userId = null)
         {
             var users = _service.GetAllUsers(userId); 
-            return Ok(_mapper.Map<UserViewModel[]>(users));
+            return OkOrNoContent(_mapper.Map<UserViewModel[]>(users));
         }
         
         /// <summary>
@@ -44,19 +43,16 @@ namespace moosik.api.Controllers
         /// <param name="userId"></param>
         /// <returns>User object matching the given userId parameter</returns>
         /// <response code="200">Success - User has been successfully returned</response>
-        /// <response code="400">Bad Request - Check input values</response>
-        /// <response code="404">Not Found - Given Post does not exist</response>
-        /// <exception cref="NotImplementedException"></exception>
+        /// <response code="404">Not Found - Given User does not exist</response>
         [Consumes(MediaTypeNames.Application.Json)]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UserDetailViewModel))]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [HttpGet("{userId:int}")]
-        public IActionResult GetUserById([FromRoute]int userId)
+        public ActionResult<UserDetailViewModel> GetDetailedUserById([FromRoute]int userId)
         {
-            var user = _service.GetUserById(userId);
-            return Ok(_mapper.Map<UserDetailViewModel>(user));
+            var user = _service.GetDetailedUserById(userId);
+            return OkOrNoNotFound(_mapper.Map<UserDetailViewModel>(user));
         }
         
         /// <summary>
@@ -69,19 +65,16 @@ namespace moosik.api.Controllers
         /// </remarks>
         /// <returns>User object matching the provided username and email address</returns>
         /// <response code="200">Success - User has been successfully returned</response>
-        /// <response code="400">Bad Request - Check input values</response>
         /// <response code="404">Not Found - No such user matches the provided arguments</response>
-        /// <exception cref="NotImplementedException"></exception>
         [Consumes(MediaTypeNames.Application.Json)]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UserViewModel))]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [HttpGet("GetUserByUsernameAndEmail",Name = "GetUserByUsernameAndEmail")]
-        public IActionResult GetUserByUsernameAndEmail([FromQuery]string username, [FromQuery]string email)
+        [HttpGet("get-user-by-username-and-email")]
+        public ActionResult<UserViewModel> GetUserByUsernameAndEmail([FromQuery]string username, [FromQuery]string email)
         {
             var user = _service.GetUserByUsernameAndEmail(username, email);
-            return Ok(_mapper.Map<UserViewModel>(user));
+            return OkOrNoNotFound(_mapper.Map<UserViewModel>(user));
         }
 
         /// <summary>
@@ -106,7 +99,7 @@ namespace moosik.api.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [HttpPut]
         [Route("{userId:int:min(1)}")]
-        public IActionResult UpdateUser(int userId, [FromBody] UpdateUserViewModel updateUserViewModel)
+        public ActionResult UpdateUser(int userId, [FromBody] UpdateUserViewModel updateUserViewModel)
         {
             var updateUserDto = _mapper.Map<UpdateUserDto>(updateUserViewModel);
             updateUserDto.Id = userId;
@@ -135,7 +128,7 @@ namespace moosik.api.Controllers
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [HttpPost]
-        public IActionResult CreateUser([FromBody] CreateUserViewModel createUserViewModel)
+        public ActionResult CreateUser([FromBody] CreateUserViewModel createUserViewModel)
         {
             _service.CreateUser(_mapper.Map<CreateUserDto>(createUserViewModel));
             return NoContent();
@@ -150,7 +143,7 @@ namespace moosik.api.Controllers
         [Consumes(MediaTypeNames.Application.Json)]
         [Produces("application/json")]
         [HttpDelete("{userId:int:min(1)}")]
-        public IActionResult DeleteUser([FromRoute] int userId)
+        public ActionResult DeleteUser([FromRoute] int userId)
         {
             _service.DeleteUser(userId);
             return NoContent();

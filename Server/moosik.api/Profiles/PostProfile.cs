@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.Diagnostics.CodeAnalysis;
+using AutoMapper;
 using moosik.api.ViewModels;
 using moosik.api.ViewModels.Post;
 using moosik.dal.Models;
@@ -6,6 +7,7 @@ using moosik.services.Dtos;
 
 namespace moosik.api.Profiles;
 
+[ExcludeFromCodeCoverage]
 public class PostProfile : Profile
 {
     public PostProfile()

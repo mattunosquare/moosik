@@ -4,7 +4,9 @@ using System.Text;
 using AutoMapper;
 using Microsoft.IdentityModel.Tokens;
 using moosik.api.Authentication.Interfaces;
+using moosik.api.Authorization.Interfaces;
 using moosik.api.ViewModels.Authentication;
+using moosik.services.Dtos;
 using moosik.services.Dtos.Authentication;
 
 namespace moosik.api.Authentication.Services;
@@ -12,10 +14,11 @@ namespace moosik.api.Authentication.Services;
 public class TokenService : ITokenService
 {
     private readonly IConfiguration _configuration;
-
+    private readonly IMapper _mapper;
     public TokenService(IConfiguration configuration, IMapper mapper)
     {
-        _configuration = configuration;
+        (_configuration) = (configuration);
+        _mapper = mapper;
     }
 
     public string GenerateToken(AuthenticationResponseDto user, int expirationTimeInMinutes)
@@ -61,30 +64,12 @@ public class TokenService : ITokenService
          var tokenString = tokenHandler.WriteToken(jwtToken);
          return tokenString;
     }
-
-    public AuthenticationResponseDto? GetClaimDetailsFromToken(string authorization)
+    
+    public AuthenticationResponseDto AppendTokens(UserDto userDto)
     {
-        var stringToken = authorization.Replace("Bearer ", string.Empty);
-        var handler = new JwtSecurityTokenHandler();
-
-        if (!(handler.CanReadToken(stringToken)))
-        {
-            return null;
-        }
+        var authenticationResponseDto = _mapper.Map<AuthenticationResponseDto>(userDto);
         
-        var jwtToken = handler.ReadJwtToken(stringToken);
-
-        return new AuthenticationResponseDto()
-        {
-            Id = Int32.Parse(jwtToken.Payload.Claims.First(c => c.Type == "nameid").Value),
-            Username = jwtToken.Payload.Claims.First(c => c.Type == "unique_name").Value,
-            Role = jwtToken.Payload.Claims.First(c => c.Type == "role").Value
-        };
-    }
-
-    public AuthenticationResponseDto AppendTokens(AuthenticationResponseDto authenticationResponseDto)
-    {
-        var accessToken = GenerateToken(authenticationResponseDto, 1);
+        var accessToken = GenerateToken(authenticationResponseDto, 30);
         var refreshToken = GenerateToken(authenticationResponseDto, 20160);
 
         authenticationResponseDto.AccessToken = accessToken;

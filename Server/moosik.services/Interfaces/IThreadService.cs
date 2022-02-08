@@ -7,7 +7,7 @@ namespace moosik.services.Interfaces;
 
 public interface IThreadService
 {
-    ThreadDto[] GetAllThreads(int? userId);
+    ThreadDto[] GetAllThreads(int? userId = null);
     ThreadDto GetThreadById(int threadId);
     ThreadDto[] GetThreadsAfterDate(DateTime date);
     void UpdateThread(UpdateThreadDto updateThreadDto);

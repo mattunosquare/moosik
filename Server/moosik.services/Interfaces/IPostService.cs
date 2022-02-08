@@ -8,7 +8,7 @@ namespace moosik.services.Interfaces;
 
 public interface IPostService
 {
-    PostDto[] GetAllPosts(int? threadId);
+    PostDto[] GetAllPosts(int? threadId = null);
     PostDto GetPostById(int postId);
     ICollection<PostDto> GetPostsAfterDate(DateTime date);
     void UpdatePost(UpdatePostDto updatePostDto);
