@@ -10,7 +10,7 @@ public class AuthorizedUserProvider : IAuthorizedUserProvider
     private readonly IUserService _userService;
     private readonly IHttpContextAccessor _httpContextAccessor;
 
-    private UserDto? _user;
+    public UserDto? _user;
 
     public AuthorizedUserProvider(IUserService userService, IHttpContextAccessor contextAccessor)
     {
@@ -20,11 +20,11 @@ public class AuthorizedUserProvider : IAuthorizedUserProvider
 
     public UserDto? GetLoggedInUser()
     {
-        var userId = _httpContextAccessor.HttpContext?.User.FindFirstValue(ClaimTypes.NameIdentifier);
-
-        if (string.IsNullOrWhiteSpace(userId)) return null;
         if (_user != null) return _user;
-
+        
+        var userId = _httpContextAccessor.HttpContext?.User.FindFirstValue(ClaimTypes.NameIdentifier);
+        if (string.IsNullOrWhiteSpace(userId)) return null;
+        
         _user = _userService.GetAllUsers(int.Parse(userId)).FirstOrDefault();
 
         return _user;

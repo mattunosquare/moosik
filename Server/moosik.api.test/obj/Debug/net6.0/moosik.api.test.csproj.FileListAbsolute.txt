@@ -353,3 +353,5 @@ C:\Users\matt.mccleave\Documents\Github\Moosik\Server\moosik.api.test\obj\Debug\
 C:\Users\matt.mccleave\Documents\Github\Moosik\Server\moosik.api.test\obj\Debug\net6.0\ref\moosik.api.test.dll
 C:\Users\matt.mccleave\Documents\Github\Moosik\Server\moosik.api.test\obj\Debug\net6.0\moosik.api.test.pdb
 C:\Users\matt.mccleave\Documents\Github\Moosik\Server\moosik.api.test\obj\Debug\net6.0\moosik.api.test.genruntimeconfig.cache
+C:\Users\matt.mccleave\Documents\Github\Moosik\Server\moosik.api.test\bin\Debug\net6.0\AutoFixture.dll
+C:\Users\matt.mccleave\Documents\Github\Moosik\Server\moosik.api.test\bin\Debug\net6.0\Fare.dll

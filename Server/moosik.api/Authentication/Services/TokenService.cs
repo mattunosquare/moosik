@@ -4,8 +4,6 @@ using System.Text;
 using AutoMapper;
 using Microsoft.IdentityModel.Tokens;
 using moosik.api.Authentication.Interfaces;
-using moosik.api.Authorization.Interfaces;
-using moosik.api.ViewModels.Authentication;
 using moosik.services.Dtos;
 using moosik.services.Dtos.Authentication;
 

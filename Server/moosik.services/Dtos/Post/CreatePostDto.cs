@@ -1,4 +1,4 @@
-﻿using moosik.services.Dtos;
+﻿namespace moosik.services.Dtos.Post;
 
 public class CreatePostDto
 {

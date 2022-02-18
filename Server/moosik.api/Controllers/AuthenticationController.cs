@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 using moosik.api.Authentication.Interfaces;
 using moosik.api.Authorization;
 using moosik.api.Authorization.Interfaces;
+using moosik.api.Authorization.RoleAuthorization;
+using moosik.api.Controllers.Base;
 using moosik.api.ViewModels.Authentication;
 using moosik.services.Dtos.Authentication;
 
@@ -13,7 +15,7 @@ namespace moosik.api.Controllers
     [ApiController]
     [RoleAuthorization]
     
-    public class AuthenticationController : ControllerBase
+    public class AuthenticationController : MoosikBaseController
     {
         private readonly IAuthenticationService _authService;
         private readonly ITokenService _tokenService;
@@ -36,7 +38,7 @@ namespace moosik.api.Controllers
         /// <response code="401">Unauthorized</response>
         [AllowAnonymous]
         [HttpPost]
-        public IActionResult Authenticate([FromBody] AuthenticationRequestViewModel authenticationRequestViewModel)
+        public ActionResult<AuthenticationResponseViewModel> Authenticate([FromBody] AuthenticationRequestViewModel authenticationRequestViewModel)
         {
             var userDto = _authService.Authenticate(_mapper.Map<AuthenticationRequestDto>(authenticationRequestViewModel));
 
@@ -55,7 +57,7 @@ namespace moosik.api.Controllers
         /// <response code="401">Unauthorized</response>
         [TokenAuthorization(TokenTypes.ValidRefreshToken)]
         [HttpGet("refresh")]
-        public IActionResult Refresh()
+        public ActionResult<AuthenticationResponseViewModel> Refresh()
         {
             var userDto = _authorizedUserProvider.GetLoggedInUser();
             if (userDto == null) return Unauthorized();

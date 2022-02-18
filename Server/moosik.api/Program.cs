@@ -12,6 +12,7 @@ using moosik.api.Authorization.Interfaces;
 using moosik.api.Authorization.Services;
 using moosik.api.ViewModels.Validators.User;
 using moosik.dal.Contexts;
+using moosik.dal.Interfaces;
 using moosik.services.Interfaces;
 using moosik.services.Services;
 
@@ -78,7 +79,6 @@ builder.Services.AddAuthorization(options =>
     });
 });
 
-
 builder.Services.AddTransient<IThreadService, ThreadService>();
 builder.Services.AddTransient<IPostService, PostService>();
 builder.Services.AddTransient<IUserService, UserService>();
@@ -92,9 +92,11 @@ builder.Services.AddAutoMapper(config => config.AllowNullCollections = true, typ
 
 builder.Services.AddFluentValidationRulesToSwagger();
 
-builder.Services.AddScoped(_ => new MoosikContext(Environment.GetEnvironmentVariable("CONNECTION_STRING") ??
-        "Host=localhost;Database=Moosik;Username=user;Password=password"));
+// builder.Services.AddScoped(_ => new MoosikContext(Environment.GetEnvironmentVariable("CONNECTION_STRING") ??
+//         "Host=localhost;Database=Moosik;Username=user;Password=password"));
 
+builder.Services.AddScoped<IMoosikDatabase, MoosikContext>(_ => new MoosikContext(Environment.GetEnvironmentVariable("CONNECTION_STRING") ??
+                                                  "Host=localhost;Database=Moosik;Username=user;Password=password"));
 
 builder.Services.AddHealthChecks();
 

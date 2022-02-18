@@ -1,12 +1,15 @@
-﻿using AutoMapper;
+﻿using System.Diagnostics.CodeAnalysis;
+using AutoMapper;
 using moosik.api.ViewModels;
 using moosik.api.ViewModels.Thread;
 using moosik.dal.Models;
 using moosik.services.Dtos;
+using moosik.services.Dtos.Post;
 using Thread = moosik.dal.Models.Thread;
 
 namespace moosik.api.Profiles;
 
+[ExcludeFromCodeCoverage]
 public class ThreadProfile : Profile
 {
     public ThreadProfile()

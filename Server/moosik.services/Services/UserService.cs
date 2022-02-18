@@ -1,11 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using AutoMapper;
-using moosik.dal.Contexts;
+using moosik.dal.Interfaces;
 using moosik.dal.Models;
 using moosik.services.Dtos;
+using moosik.services.Dtos.User;
 using moosik.services.Exceptions;
 using moosik.services.Interfaces;
 
@@ -13,12 +13,12 @@ namespace moosik.services.Services;
 
 public class UserService : IUserService
 {
-    private readonly MoosikContext _database;
+    private readonly IMoosikDatabase _database;
     private readonly IMapper _mapper;
 
-    public UserService(MoosikContext database, IMapper mapper) => (_database,_mapper) = (database, mapper);
+    public UserService(IMoosikDatabase database, IMapper mapper) => (_database,_mapper) = (database, mapper);
 
-    public UserDto[] GetAllUsers(int? userId)
+    public UserDto[] GetAllUsers(int? userId = null)
     {
         Expression<Func<User, bool>> returnAll = u => true;
         Expression<Func<User, bool>> returnSingle = u => u.Id == userId;

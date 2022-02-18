@@ -5,6 +5,7 @@ using System.Linq.Expressions;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using moosik.dal.Contexts;
+using moosik.dal.Interfaces;
 using moosik.dal.Models;
 using moosik.services.Dtos;
 using moosik.services.Exceptions;
@@ -13,19 +14,19 @@ namespace moosik.services.Services;
 
 public class ThreadService : IThreadService
 {
-    private readonly MoosikContext _database;
+    private readonly IMoosikDatabase _database;
     private readonly IMapper _mapper;
 
-    public ThreadService(MoosikContext database, IMapper mapper)
+    public ThreadService(IMoosikDatabase database, IMapper mapper)
     {
         _database = database;
         _mapper = mapper;
     }
     
-    public ThreadDto[] GetAllThreads(int? userId)
+    public ThreadDto[] GetAllThreads(int? userId = null)
     {
         Expression<Func<Thread, bool>> returnAll = t => true;
-        Expression<Func<Thread, bool>> returnSingle = t => t.Id == userId;
+        Expression<Func<Thread, bool>> returnSingle = t => t.UserId == userId;
         var filterThreadByUserId = userId >= 0 ? returnSingle : returnAll; 
 
         return _mapper.ProjectTo<ThreadDto>(

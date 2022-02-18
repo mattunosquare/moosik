@@ -1,13 +1,16 @@
-﻿using AutoMapper;
+﻿using System.Diagnostics.CodeAnalysis;
+using AutoMapper;
 using moosik.api.ViewModels.Authentication;
 using moosik.api.ViewModels.User;
 using moosik.dal.Models;
 using moosik.services.Dtos;
 using moosik.services.Dtos.Authentication;
+using moosik.services.Dtos.User;
 using BC = BCrypt.Net.BCrypt;
 
 namespace moosik.api.Profiles;
 
+[ExcludeFromCodeCoverage]
 public class UserProfile : Profile
 {
     public UserProfile()
@@ -34,7 +37,6 @@ public class UserProfile : Profile
             .ForMember(d => d.UserRoleId, o=> o.MapFrom(x => x.RoleId));
         CreateMap<UpdateUserDto, User>();
     }
-
     private void DtoToDto()
     {
         CreateMap<UserDto, AuthenticationResponseDto>()

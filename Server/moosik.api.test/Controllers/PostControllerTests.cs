@@ -6,6 +6,7 @@ using moosik.api.Controllers;
 using moosik.api.test.Extensions;
 using moosik.api.ViewModels;
 using moosik.services.Dtos;
+using moosik.services.Dtos.Post;
 using moosik.services.Interfaces;
 using NSubstitute;
 using Xunit;

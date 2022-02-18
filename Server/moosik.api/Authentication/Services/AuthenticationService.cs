@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using moosik.api.Authentication.Interfaces;
 using moosik.dal.Contexts;
+using moosik.dal.Interfaces;
 using moosik.dal.Models;
 using moosik.services.Dtos;
 using moosik.services.Dtos.Authentication;
@@ -11,10 +12,10 @@ namespace moosik.api.Authentication.Services;
 
 public class AuthenticationService : IAuthenticationService
 {
-    private readonly MoosikContext _database;
+    private readonly IMoosikDatabase _database;
     private readonly IMapper _mapper;
 
-    public AuthenticationService(MoosikContext database, IMapper mapper)
+    public AuthenticationService(IMoosikDatabase database, IMapper mapper)
     {
         _database = database;
         _mapper = mapper;

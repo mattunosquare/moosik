@@ -8,6 +8,7 @@ public class ThreadDto
     public string Title { get; set; }
     public DateTime CreatedDate { get; set; }
     public ThreadTypeDto ThreadType { get; set; }
+    public int UserId { get; set; }
     public UserDto User { get; set; }
     public PostDto[] Posts { get; set; }
 }

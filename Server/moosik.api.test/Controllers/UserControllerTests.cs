@@ -6,6 +6,7 @@ using moosik.api.Controllers;
 using moosik.api.test.Extensions;
 using moosik.api.ViewModels.User;
 using moosik.services.Dtos;
+using moosik.services.Dtos.User;
 using moosik.services.Interfaces;
 using NSubstitute;
 using Xunit;

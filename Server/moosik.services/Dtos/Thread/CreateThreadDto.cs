@@ -1,4 +1,6 @@
-﻿namespace moosik.services.Dtos;
+﻿using moosik.services.Dtos.Post;
+
+namespace moosik.services.Dtos;
 
 public class CreateThreadDto
 {

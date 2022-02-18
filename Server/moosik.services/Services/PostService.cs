@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using AutoMapper;
-using moosik.dal.Contexts;
+using moosik.dal.Interfaces;
 using moosik.dal.Models;
 using moosik.services.Dtos;
+using moosik.services.Dtos.Post;
 using moosik.services.Exceptions;
 using moosik.services.Interfaces;
 
@@ -13,26 +14,26 @@ namespace moosik.services.Services;
 
 public class PostService : IPostService
 {
-    private readonly MoosikContext _database;
+    private readonly IMoosikDatabase _database;
     private readonly IMapper _mapper;
 
-    public PostService(MoosikContext database, IMapper mapper)
+    public PostService(IMoosikDatabase database, IMapper mapper)
     {
         _database = database;
         _mapper = mapper;
     }
 
-    public PostDto[] GetAllPosts(int? threadId)
+    public PostDto[] GetAllPosts(int? threadId = null)
     {
         Expression<Func<Post, bool>> returnAll = p => true;
-        Expression<Func<Post, bool>> returnSingle = p => p.Id == threadId;
-
-        var filterPostByThreadId = threadId >= 0 ? returnSingle : returnAll;
-
+        Expression<Func<Post, bool>> returnMatching = p => p.ThreadId == threadId;
+    
+        var filterPostByThreadId = threadId >= 0 ? returnMatching : returnAll;
+    
         return _mapper.ProjectTo<PostDto>(
                 _database.Get<Post>()
                     .Where(filterPostByThreadId))
-            .ToArray();
+            .ToArray(); ;
     }
 
     public PostDto GetPostById(int postId)

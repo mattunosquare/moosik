@@ -2,9 +2,11 @@ using System.Net.Mime;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using moosik.api.Authorization;
+using moosik.api.Authorization.RoleAuthorization;
 using moosik.api.Controllers.Base;
 using moosik.api.ViewModels;
 using moosik.services.Dtos;
+using moosik.services.Dtos.Post;
 using moosik.services.Interfaces;
 
 namespace moosik.api.Controllers

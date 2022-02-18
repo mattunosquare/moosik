@@ -19,12 +19,12 @@ public class PostResource
     [Column("post_id")]
     public int PostId { get; set; }
 
-    [ForeignKey(nameof(PostId))] 
-    public Post Post { get; set; }
+    //[ForeignKey(nameof(PostId))] 
+    //public Post Post { get; set; }
     
     [Column("resource_type_id")]
     public int ResourceTypeId { get; set; }
     
-    [ForeignKey(nameof(ResourceTypeId))]
-    public ResourceType ResourceType { get; set; }
+    //[ForeignKey(nameof(ResourceTypeId))]
+    //public ResourceType ResourceType { get; set; }
 }

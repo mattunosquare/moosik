@@ -4,6 +4,7 @@ using moosik.api.ViewModels;
 using moosik.api.ViewModels.Post;
 using moosik.dal.Models;
 using moosik.services.Dtos;
+using moosik.services.Dtos.Post;
 
 namespace moosik.api.Profiles;
 

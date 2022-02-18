@@ -4,14 +4,14 @@
     "C:\\Users\\matt.mccleave\\Documents\\Github\\Moosik\\Server\\moosik.services.test\\moosik.services.test.csproj": {}
   },
   "projects": {
-    "C:\\Users\\matt.mccleave\\Documents\\Github\\Moosik\\Server\\moosik.services.test\\moosik.services.test.csproj": {
+    "C:\\Users\\matt.mccleave\\Documents\\Github\\Moosik\\Server\\moosik.dal\\moosik.dal.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\matt.mccleave\\Documents\\Github\\Moosik\\Server\\moosik.services.test\\moosik.services.test.csproj",
-        "projectName": "moosik.services.test",
-        "projectPath": "C:\\Users\\matt.mccleave\\Documents\\Github\\Moosik\\Server\\moosik.services.test\\moosik.services.test.csproj",
+        "projectUniqueName": "C:\\Users\\matt.mccleave\\Documents\\Github\\Moosik\\Server\\moosik.dal\\moosik.dal.csproj",
+        "projectName": "moosik.dal",
+        "projectPath": "C:\\Users\\matt.mccleave\\Documents\\Github\\Moosik\\Server\\moosik.dal\\moosik.dal.csproj",
         "packagesPath": "C:\\Users\\matt.mccleave\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\matt.mccleave\\Documents\\Github\\Moosik\\Server\\moosik.services.test\\obj\\",
+        "outputPath": "C:\\Users\\matt.mccleave\\Documents\\Github\\Moosik\\Server\\moosik.dal\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\matt.mccleave\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -40,9 +40,89 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "dependencies": {
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[6.0.1, )"
+            },
+            "Npgsql.EntityFrameworkCore.PostgreSQL": {
+              "target": "Package",
+              "version": "[6.0.2, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.101\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\matt.mccleave\\Documents\\Github\\Moosik\\Server\\moosik.services.test\\moosik.services.test.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\matt.mccleave\\Documents\\Github\\Moosik\\Server\\moosik.services.test\\moosik.services.test.csproj",
+        "projectName": "moosik.services.test",
+        "projectPath": "C:\\Users\\matt.mccleave\\Documents\\Github\\Moosik\\Server\\moosik.services.test\\moosik.services.test.csproj",
+        "packagesPath": "C:\\Users\\matt.mccleave\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\matt.mccleave\\Documents\\Github\\Moosik\\Server\\moosik.services.test\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\matt.mccleave\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {
+              "C:\\Users\\matt.mccleave\\Documents\\Github\\Moosik\\Server\\moosik.services\\moosik.services.csproj": {
+                "projectPath": "C:\\Users\\matt.mccleave\\Documents\\Github\\Moosik\\Server\\moosik.services\\moosik.services.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "AutoFixture": {
+              "target": "Package",
+              "version": "[4.17.0, )"
+            },
+            "FluentAssertions": {
+              "target": "Package",
+              "version": "[6.4.0, )"
+            },
             "Microsoft.NET.Test.Sdk": {
               "target": "Package",
               "version": "[16.11.0, )"
+            },
+            "NSubstitute": {
+              "target": "Package",
+              "version": "[4.3.0, )"
             },
             "coverlet.collector": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
@@ -72,6 +152,88 @@
           "assetTargetFallback": true,
           "warn": true,
           "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.101\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\matt.mccleave\\Documents\\Github\\Moosik\\Server\\moosik.services\\moosik.services.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\matt.mccleave\\Documents\\Github\\Moosik\\Server\\moosik.services\\moosik.services.csproj",
+        "projectName": "moosik.services",
+        "projectPath": "C:\\Users\\matt.mccleave\\Documents\\Github\\Moosik\\Server\\moosik.services\\moosik.services.csproj",
+        "packagesPath": "C:\\Users\\matt.mccleave\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\matt.mccleave\\Documents\\Github\\Moosik\\Server\\moosik.services\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\matt.mccleave\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {
+              "C:\\Users\\matt.mccleave\\Documents\\Github\\Moosik\\Server\\moosik.dal\\moosik.dal.csproj": {
+                "projectPath": "C:\\Users\\matt.mccleave\\Documents\\Github\\Moosik\\Server\\moosik.dal\\moosik.dal.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "AutoMapper": {
+              "target": "Package",
+              "version": "[11.0.0, )"
+            },
+            "AutoMapper.Extensions.Microsoft.DependencyInjection": {
+              "target": "Package",
+              "version": "[11.0.0, )"
+            },
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[6.0.1, )"
+            },
+            "System.IdentityModel.Tokens.Jwt": {
+              "target": "Package",
+              "version": "[6.15.1, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }

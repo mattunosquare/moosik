@@ -1,6 +1,4 @@
-﻿using moosik.dal.Models;
-
-namespace moosik.services.Dtos;
+﻿namespace moosik.services.Dtos.User;
 
 public class UserDetailDto
 {
@@ -8,6 +6,6 @@ public class UserDetailDto
     public string Username { get; set; }
     public string Email { get; set; }
     public ThreadDto[] Threads { get; set; }
-    public Post[] Posts { get; set; }
+    public dal.Models.Post[] Posts { get; set; }
     public UserRoleDto Role { get; set; }
 }

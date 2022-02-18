@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 
-namespace moosik.api.Authorization
+namespace moosik.api.Authorization.RoleAuthorization
 {
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
     public class RoleAuthorizationAttribute  : AuthorizeAttribute

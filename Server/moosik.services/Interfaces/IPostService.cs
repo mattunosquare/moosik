@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using moosik.dal.Models;
 using moosik.services.Dtos;
+using moosik.services.Dtos.Post;
 
 namespace moosik.services.Interfaces;
 
