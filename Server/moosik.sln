@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "moosik.api.test", "moosik.a
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "moosik.services.test", "moosik.services.test\moosik.services.test.csproj", "{9AAF5CF8-2409-4E2A-9202-F7563AE899C5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "moosik.api.integration.test", "moosik.api.integration.test\moosik.api.integration.test.csproj", "{8171CA8E-06C3-4657-8DC9-8F949BB049A2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,9 +46,14 @@ Global
 		{9AAF5CF8-2409-4E2A-9202-F7563AE899C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9AAF5CF8-2409-4E2A-9202-F7563AE899C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9AAF5CF8-2409-4E2A-9202-F7563AE899C5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8171CA8E-06C3-4657-8DC9-8F949BB049A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8171CA8E-06C3-4657-8DC9-8F949BB049A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8171CA8E-06C3-4657-8DC9-8F949BB049A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8171CA8E-06C3-4657-8DC9-8F949BB049A2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{4E29E9C4-4ADC-4817-968D-DECD835D5EC6} = {AD86E7B6-D073-467E-8EEF-E6B0E990775E}
 		{9AAF5CF8-2409-4E2A-9202-F7563AE899C5} = {AD86E7B6-D073-467E-8EEF-E6B0E990775E}
+		{8171CA8E-06C3-4657-8DC9-8F949BB049A2} = {AD86E7B6-D073-467E-8EEF-E6B0E990775E}
 	EndGlobalSection
 EndGlobal

@@ -5,6 +5,7 @@ using moosik.services.Interfaces;
 using AutoMapper;
 using moosik.api.Authorization;
 using moosik.api.Authorization.RoleAuthorization;
+using moosik.api.Authorization.TokenAuthorization;
 using moosik.api.Controllers.Base;
 using moosik.api.ViewModels.Thread;
 using moosik.services.Dtos;

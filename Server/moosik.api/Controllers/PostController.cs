@@ -3,6 +3,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using moosik.api.Authorization;
 using moosik.api.Authorization.RoleAuthorization;
+using moosik.api.Authorization.TokenAuthorization;
 using moosik.api.Controllers.Base;
 using moosik.api.ViewModels;
 using moosik.services.Dtos;
@@ -50,7 +51,7 @@ namespace moosik.api.Controllers
         /// <returns>Post object matching the given id parameter</returns>
         /// <response code="200">Success - Post has been successfully returned</response>
         /// <response code="204">No Content - Request successfully performed, however no Post exists for the given arguments</response>
-        [HttpGet("{postId:int}")]
+        [HttpGet("{postId:int:min(1)}")]
         [Consumes(MediaTypeNames.Application.Json)]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PostViewModel))]

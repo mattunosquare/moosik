@@ -3,6 +3,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using moosik.api.Authorization;
 using moosik.api.Authorization.RoleAuthorization;
+using moosik.api.Authorization.TokenAuthorization;
 using moosik.api.Controllers.Base;
 using moosik.api.ViewModels.User;
 using moosik.services.Dtos;

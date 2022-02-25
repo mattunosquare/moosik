@@ -41,7 +41,7 @@ public class PostService : IPostService
         return _mapper.ProjectTo<PostDto>(
                 _database.Get<Post>()
                     .Where(post => post.Id == postId))
-            .SingleOrDefault();
+        .SingleOrDefault();
     }
 
     public ICollection<PostDto> GetPostsAfterDate(DateTime date)

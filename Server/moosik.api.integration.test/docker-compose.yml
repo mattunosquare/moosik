@@ -1,0 +1,23 @@
+﻿version: '3'
+services:
+  db:
+    image: postgres:latest
+    restart: always
+    ports:
+      - 6000:5432
+    environment:
+      POSTGRES_DB: Moosik
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+    volumes:
+      - db:/var/lib/postgresql/data
+  flyway:
+    image: flyway/flyway
+    command: -url=jdbc:postgresql://db/Moosik -schemas=public -user=user
+      -password=password -connectRetries=5 migrate
+    volumes:
+      - ./../../Migrations:/flyway/sql
+    depends_on:
+      - db
+volumes:
+  db: 

@@ -1,0 +1,5 @@
+{
+  "moosik.api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null": "C:\\Users\\matt.mccleave\\Documents\\Github\\Moosik\\Server\\moosik.api",
+  "moosik.dal, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null": "C:\\Users\\matt.mccleave\\Documents\\Github\\Moosik\\Server\\moosik.dal",
+  "moosik.services, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null": "C:\\Users\\matt.mccleave\\Documents\\Github\\Moosik\\Server\\moosik.services"
+}
