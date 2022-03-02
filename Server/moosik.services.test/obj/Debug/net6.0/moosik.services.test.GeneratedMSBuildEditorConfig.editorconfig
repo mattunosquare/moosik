@@ -7,4 +7,4 @@ build_property.InvariantGlobalization =
 build_property.PlatformNeutralAssembly = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = moosik.services.test
-build_property.ProjectDir = C:\Users\matt.mccleave\Documents\Github\Moosik\Server\moosik.services.test\
+build_property.ProjectDir = c:\Users\matt.mccleave\Documents\Github\moosik\Server\moosik.services.test\
