@@ -1,5 +1,7 @@
-﻿namespace moosik.api.ViewModels;
+﻿using System.Diagnostics.CodeAnalysis;
 
+namespace moosik.api.ViewModels;
+[ExcludeFromCodeCoverage]
 public class CreateThreadViewModel
 {
     public string Title { get; set; }

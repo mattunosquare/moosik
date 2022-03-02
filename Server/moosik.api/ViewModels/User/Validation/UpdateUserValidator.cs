@@ -1,7 +1,8 @@
-﻿using FluentValidation;
+﻿using System.Diagnostics.CodeAnalysis;
+using FluentValidation;
 
 namespace moosik.api.ViewModels.User.Validation;
-
+[ExcludeFromCodeCoverage]
 public class UpdateUserValidator : AbstractValidator<UpdateUserViewModel>
 {
     public UpdateUserValidator()

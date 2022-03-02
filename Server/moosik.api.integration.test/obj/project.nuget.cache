@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "KycNpwgr+pdfNc8fDCD7nfV8NDjl4WYNSd81OObG2wc7xMuP+Ocd2VGq9iLQXcF8jyHo8iDBiK6lQvBkSaDMRg==",
+  "dgSpecHash": "Iatlik1XXys1zg4cw9ceSw///reM7xXvOKRNlx4sRz0aJYcLgFCkvamE48cnuN90jPWMfE6o40CIC72to1jh0g==",
   "success": true,
   "projectFilePath": "C:\\Users\\matt.mccleave\\Documents\\Github\\Moosik\\Server\\moosik.api.integration.test\\moosik.api.integration.test.csproj",
   "expectedPackageFiles": [
@@ -103,8 +103,10 @@
     "C:\\Users\\matt.mccleave\\.nuget\\packages\\microsoft.win32.primitives\\4.3.0\\microsoft.win32.primitives.4.3.0.nupkg.sha512",
     "C:\\Users\\matt.mccleave\\.nuget\\packages\\microsoft.win32.registry\\4.3.0\\microsoft.win32.registry.4.3.0.nupkg.sha512",
     "C:\\Users\\matt.mccleave\\.nuget\\packages\\microsoft.win32.systemevents\\4.7.0\\microsoft.win32.systemevents.4.7.0.nupkg.sha512",
+    "C:\\Users\\matt.mccleave\\.nuget\\packages\\namotion.reflection\\2.0.10\\namotion.reflection.2.0.10.nupkg.sha512",
     "C:\\Users\\matt.mccleave\\.nuget\\packages\\netstandard.library\\1.6.1\\netstandard.library.1.6.1.nupkg.sha512",
     "C:\\Users\\matt.mccleave\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512",
+    "C:\\Users\\matt.mccleave\\.nuget\\packages\\njsonschema\\10.6.10\\njsonschema.10.6.10.nupkg.sha512",
     "C:\\Users\\matt.mccleave\\.nuget\\packages\\npgsql\\6.0.2\\npgsql.6.0.2.nupkg.sha512",
     "C:\\Users\\matt.mccleave\\.nuget\\packages\\npgsql.entityframeworkcore.postgresql\\6.0.2\\npgsql.entityframeworkcore.postgresql.6.0.2.nupkg.sha512",
     "C:\\Users\\matt.mccleave\\.nuget\\packages\\nuget.common\\5.11.0\\nuget.common.5.11.0.nupkg.sha512",

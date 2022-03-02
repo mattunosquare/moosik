@@ -1,7 +1,9 @@
-﻿using FluentValidation;
+﻿using System.Diagnostics.CodeAnalysis;
+using FluentValidation;
 using moosik.api.ViewModels.User;
 
 namespace moosik.api.ViewModels.Validators.User;
+[ExcludeFromCodeCoverage]
 public class CreateUserValidator : AbstractValidator<CreateUserViewModel>
 {
     public CreateUserValidator()

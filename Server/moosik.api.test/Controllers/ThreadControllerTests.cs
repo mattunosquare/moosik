@@ -8,6 +8,7 @@ using moosik.api.ViewModels;
 using moosik.api.ViewModels.Thread;
 using moosik.api.ViewModels.User;
 using moosik.services.Dtos;
+using moosik.services.Dtos.Thread;
 using moosik.services.Interfaces;
 using NSubstitute;
 using Xunit;

@@ -1,7 +1,8 @@
-﻿using FluentValidation;
+﻿using System.Diagnostics.CodeAnalysis;
+using FluentValidation;
 
 namespace moosik.api.ViewModels.Thread.Validation;
-
+[ExcludeFromCodeCoverage]
 public class CreateThreadValidator : AbstractValidator<CreateThreadViewModel>
 {
     public CreateThreadValidator()

@@ -1,7 +1,8 @@
-﻿using FluentValidation;
+﻿using System.Diagnostics.CodeAnalysis;
+using FluentValidation;
 
 namespace moosik.api.ViewModels.Validators;
-
+[ExcludeFromCodeCoverage]
 public class CreatePostValidator : AbstractValidator<CreatePostViewModel>
 {
     public CreatePostValidator()

@@ -1,8 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
-namespace moosik.services.Dtos;
-
+namespace moosik.services.Dtos.Post;
+[ExcludeFromCodeCoverage]
 public class PostDto
 {
     public int Id { get; set; }

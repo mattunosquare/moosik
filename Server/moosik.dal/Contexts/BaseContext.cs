@@ -1,10 +1,9 @@
-﻿using System;
+﻿using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 
 namespace moosik.dal.Contexts;
-
+[ExcludeFromCodeCoverage]
 public class BaseContext : DbContext
 {
     private readonly string _connectionString;
@@ -44,8 +43,5 @@ public class BaseContext : DbContext
         base.OnConfiguring(optionsBuilder);
 
         optionsBuilder.UseNpgsql(_connectionString);
-        //.LogTo(Console.WriteLine, LogLevel.Information);
-
-
     }
 }

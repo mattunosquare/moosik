@@ -1,5 +1,7 @@
-﻿namespace moosik.services.Dtos;
+﻿using System.Diagnostics.CodeAnalysis;
 
+namespace moosik.services.Dtos.Post;
+[ExcludeFromCodeCoverage]
 public class PostResourceDto
 {
     public int Id { get; set; }

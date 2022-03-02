@@ -1,5 +1,7 @@
-﻿namespace moosik.services.Dtos.Authentication;
+﻿using System.Diagnostics.CodeAnalysis;
 
+namespace moosik.services.Dtos.Authentication;
+[ExcludeFromCodeCoverage]
 public class AuthenticationResponseDto
 {
     public int Id { get; set; }

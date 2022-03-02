@@ -1,11 +1,10 @@
-﻿using moosik.api.ViewModels.Post;
+﻿using System.Diagnostics.CodeAnalysis;
+using moosik.api.ViewModels.Post;
 
 namespace moosik.api.ViewModels;
-
+[ExcludeFromCodeCoverage]
 public class CreatePostViewModel
 {
-    public int ThreadId { get; set; }
-    
     public int UserId { get; set; }
 
     public string Description { get; set; }

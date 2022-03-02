@@ -2,6 +2,7 @@
 using System.Linq;
 using moosik.dal.Models;
 using moosik.services.Dtos;
+using moosik.services.Dtos.Thread;
 
 namespace moosik.services.Interfaces;
 

@@ -9,6 +9,7 @@ using moosik.api.Authorization.TokenAuthorization;
 using moosik.api.Controllers.Base;
 using moosik.api.ViewModels.Thread;
 using moosik.services.Dtos;
+using moosik.services.Dtos.Thread;
 using moosik.services.Exceptions;
 
 namespace moosik.api.Controllers

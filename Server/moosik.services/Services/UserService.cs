@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Linq.Expressions;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using moosik.dal.Interfaces;
 using moosik.dal.Models;
 using moosik.services.Dtos;

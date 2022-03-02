@@ -30,7 +30,7 @@ public class PostProfile : Profile
     private void ConfigureDtoToDomain()
     {
         CreateMap<CreatePostDto, Post>()
-            .ForMember(d => d.PostResources, o => o.MapFrom(
+            .ForMember(d => d.Resources, o => o.MapFrom(
                 x => x.Resource != null ? new List<CreatePostResourceDto> {x.Resource} : new List<CreatePostResourceDto>()))
             .ForMember(d => d.Active, o => o.MapFrom(x => true))
             .ForMember(d => d.CreatedDate, o => o.MapFrom(x => DateTime.UtcNow));
@@ -42,8 +42,7 @@ public class PostProfile : Profile
     
     private void ConfigureDomainToDto()
     {
-        CreateMap<Post, PostDto>()
-            .ForMember(d => d.Resources, o => o.MapFrom(x => x.PostResources));
+        CreateMap<Post, PostDto>();
         CreateMap<PostResource, PostResourceDto>();
         CreateMap<ResourceType, ResourceTypeDto>();
     }

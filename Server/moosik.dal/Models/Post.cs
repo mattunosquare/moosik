@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics.CodeAnalysis;
 
 namespace moosik.dal.Models;
-
+[ExcludeFromCodeCoverage]
 [Table("posts")]
 public class Post
 {
@@ -33,5 +34,5 @@ public class Post
     [ForeignKey(nameof(ThreadId))]
     public Thread Thread { get; set; }
     
-    public List<PostResource> PostResources { get; set; }
+    public List<PostResource> Resources { get; set; }
 }

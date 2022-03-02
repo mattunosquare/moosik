@@ -1,7 +1,8 @@
-﻿using moosik.api.ViewModels.User;
+﻿using System.Diagnostics.CodeAnalysis;
+using moosik.api.ViewModels.User;
 
 namespace moosik.api.ViewModels;
-
+[ExcludeFromCodeCoverage]
 public class PostViewModel
 {
     public int Id { get; set; }

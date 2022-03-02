@@ -1,8 +1,9 @@
-﻿using FluentValidation;
+﻿using System.Diagnostics.CodeAnalysis;
+using FluentValidation;
 using moosik.api.ViewModels.Post;
 
 namespace moosik.api.ViewModels.Validators;
-
+[ExcludeFromCodeCoverage]
 public class CreatePostResourceValidator : AbstractValidator<CreatePostResourceViewModel>
 {
     public CreatePostResourceValidator()

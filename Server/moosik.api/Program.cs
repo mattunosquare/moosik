@@ -10,6 +10,7 @@ using moosik.api.Authentication.Interfaces;
 using moosik.api.Authentication.Services;
 using moosik.api.Authorization.Interfaces;
 using moosik.api.Authorization.Services;
+using moosik.api.Exception;
 using moosik.api.ViewModels.Validators.User;
 using moosik.dal.Contexts;
 using moosik.dal.Interfaces;
@@ -21,6 +22,10 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddControllers().AddJsonOptions(x=>x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
+builder.Services.AddControllers(options =>
+{
+    options.Filters.Add<GeneralExceptionFilter>();
+});
 builder.Services.AddFluentValidation(fv =>
 {
     fv.RegisterValidatorsFromAssemblyContaining<CreateUserValidator>();

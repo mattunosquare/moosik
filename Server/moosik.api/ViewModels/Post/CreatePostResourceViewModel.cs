@@ -1,5 +1,7 @@
-﻿namespace moosik.api.ViewModels.Post;
+﻿using System.Diagnostics.CodeAnalysis;
 
+namespace moosik.api.ViewModels.Post;
+[ExcludeFromCodeCoverage]
 public class CreatePostResourceViewModel
 {
     public string Title { get; set; }

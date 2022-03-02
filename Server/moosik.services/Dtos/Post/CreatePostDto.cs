@@ -1,5 +1,7 @@
-﻿namespace moosik.services.Dtos.Post;
+﻿using System.Diagnostics.CodeAnalysis;
 
+namespace moosik.services.Dtos.Post;
+[ExcludeFromCodeCoverage]
 public class CreatePostDto
 {
     public int ThreadId { get; set; }

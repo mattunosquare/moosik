@@ -1,10 +1,10 @@
-﻿using System.Linq;
+﻿using System.Diagnostics.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
 using moosik.dal.Interfaces;
 using moosik.dal.Models;
 
 namespace moosik.dal.Contexts;
-
+[ExcludeFromCodeCoverage]
 public class MoosikContext : BaseContext, IMoosikDatabase
 {
     public MoosikContext(string connectionString) : base(connectionString){}

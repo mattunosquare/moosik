@@ -5,6 +5,7 @@ using moosik.api.ViewModels.Thread;
 using moosik.dal.Models;
 using moosik.services.Dtos;
 using moosik.services.Dtos.Post;
+using moosik.services.Dtos.Thread;
 using Thread = moosik.dal.Models.Thread;
 
 namespace moosik.api.Profiles;

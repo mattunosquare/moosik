@@ -8,6 +8,7 @@ using moosik.dal.Contexts;
 using moosik.dal.Interfaces;
 using moosik.dal.Models;
 using moosik.services.Dtos;
+using moosik.services.Dtos.Thread;
 using moosik.services.Exceptions;
 using moosik.services.Interfaces;
 namespace moosik.services.Services;

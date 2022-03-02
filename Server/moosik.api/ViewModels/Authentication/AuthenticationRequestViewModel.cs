@@ -1,5 +1,8 @@
-﻿namespace moosik.api.ViewModels.Authentication;
+﻿using System.Diagnostics.CodeAnalysis;
 
+namespace moosik.api.ViewModels.Authentication;
+
+[ExcludeFromCodeCoverage]
 public class AuthenticationRequestViewModel
 {
     public string Username { get; set; }

@@ -1,5 +1,8 @@
-﻿namespace moosik.services.Dtos;
+﻿using System.Diagnostics.CodeAnalysis;
 
+namespace moosik.services.Dtos;
+
+[ExcludeFromCodeCoverage]
 public class ThreadTypeDto
 {
     public int Id { get; set; }

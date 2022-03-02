@@ -648,3 +648,5 @@ C:\Users\matt.mccleave\Documents\Github\Moosik\Server\moosik.api.integration.tes
 C:\Users\matt.mccleave\Documents\Github\Moosik\Server\moosik.api.integration.test\bin\Debug\net6.0\moosik.api.pdb
 C:\Users\matt.mccleave\Documents\Github\Moosik\Server\moosik.api.integration.test\bin\Debug\net6.0\moosik.api.xml
 C:\Users\matt.mccleave\Documents\Github\Moosik\Server\moosik.api.integration.test\bin\Debug\net6.0\moosik.services.pdb
+C:\Users\matt.mccleave\Documents\Github\Moosik\Server\moosik.api.integration.test\bin\Debug\net6.0\Namotion.Reflection.dll
+C:\Users\matt.mccleave\Documents\Github\Moosik\Server\moosik.api.integration.test\bin\Debug\net6.0\NJsonSchema.dll

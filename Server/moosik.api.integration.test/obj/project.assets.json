@@ -2112,6 +2112,18 @@
           }
         }
       },
+      "Namotion.Reflection/2.0.10": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.CSharp": "4.3.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/Namotion.Reflection.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Namotion.Reflection.dll": {}
+        }
+      },
       "NETStandard.Library/1.6.1": {
         "type": "package",
         "dependencies": {
@@ -2168,6 +2180,19 @@
         },
         "runtime": {
           "lib/netstandard2.0/Newtonsoft.Json.dll": {}
+        }
+      },
+      "NJsonSchema/10.6.10": {
+        "type": "package",
+        "dependencies": {
+          "Namotion.Reflection": "2.0.10",
+          "Newtonsoft.Json": "9.0.1"
+        },
+        "compile": {
+          "lib/netstandard2.0/NJsonSchema.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/NJsonSchema.dll": {}
         }
       },
       "Npgsql/6.0.2": {
@@ -7408,6 +7433,25 @@
         "version.txt"
       ]
     },
+    "Namotion.Reflection/2.0.10": {
+      "sha512": "KHndyscosup/AnzMQLzW0g6+z0h2NCmTyW9hnEL/T/ZkiUIQWBA1RadYgUT+dXuMORmQI/BXm+DXYySWwq8h0Q==",
+      "type": "package",
+      "path": "namotion.reflection/2.0.10",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net40/Namotion.Reflection.dll",
+        "lib/net40/Namotion.Reflection.xml",
+        "lib/net45/Namotion.Reflection.dll",
+        "lib/net45/Namotion.Reflection.xml",
+        "lib/netstandard1.0/Namotion.Reflection.dll",
+        "lib/netstandard1.0/Namotion.Reflection.xml",
+        "lib/netstandard2.0/Namotion.Reflection.dll",
+        "lib/netstandard2.0/Namotion.Reflection.xml",
+        "namotion.reflection.2.0.10.nupkg.sha512",
+        "namotion.reflection.nuspec"
+      ]
+    },
     "NETStandard.Library/1.6.1": {
       "sha512": "WcSp3+vP+yHNgS8EV5J7pZ9IRpeDuARBPN28by8zqff1wJQXm26PVU8L3/fYLBJVU7BtDyqNVWq2KlCVvSSR4A==",
       "type": "package",
@@ -7446,6 +7490,26 @@
         "newtonsoft.json.13.0.1.nupkg.sha512",
         "newtonsoft.json.nuspec",
         "packageIcon.png"
+      ]
+    },
+    "NJsonSchema/10.6.10": {
+      "sha512": "njAKZxQOycYTU3fn5GjJxJjOt5dSiDvj3GrwP7Y0M/+WCGoD/q5HRC3U2tcVU1aIKGzDpZ8f6kM5BO5DVsXoxw==",
+      "type": "package",
+      "path": "njsonschema/10.6.10",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "NuGetIcon.png",
+        "lib/net40/NJsonSchema.dll",
+        "lib/net40/NJsonSchema.xml",
+        "lib/net45/NJsonSchema.dll",
+        "lib/net45/NJsonSchema.xml",
+        "lib/netstandard1.0/NJsonSchema.dll",
+        "lib/netstandard1.0/NJsonSchema.xml",
+        "lib/netstandard2.0/NJsonSchema.dll",
+        "lib/netstandard2.0/NJsonSchema.xml",
+        "njsonschema.10.6.10.nupkg.sha512",
+        "njsonschema.nuspec"
       ]
     },
     "Npgsql/6.0.2": {
@@ -12121,6 +12185,7 @@
       "Microsoft.AspNetCore.Mvc.Testing >= 6.0.2",
       "Microsoft.AspNetCore.TestHost >= 6.0.2",
       "Microsoft.NET.Test.Sdk >= 16.11.0",
+      "NJsonSchema >= 10.6.10",
       "coverlet.collector >= 3.1.0",
       "moosik.api >= 1.0.0",
       "moosik.dal >= 1.0.0",
@@ -12197,6 +12262,10 @@
           "Microsoft.NET.Test.Sdk": {
             "target": "Package",
             "version": "[16.11.0, )"
+          },
+          "NJsonSchema": {
+            "target": "Package",
+            "version": "[10.6.10, )"
           },
           "coverlet.collector": {
             "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",

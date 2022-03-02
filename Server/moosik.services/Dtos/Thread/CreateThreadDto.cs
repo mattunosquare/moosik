@@ -1,6 +1,8 @@
-﻿using moosik.services.Dtos.Post;
+﻿using System.Diagnostics.CodeAnalysis;
+using moosik.services.Dtos.Post;
 
-namespace moosik.services.Dtos;
+namespace moosik.services.Dtos.Thread;
+[ExcludeFromCodeCoverage]
 
 public class CreateThreadDto
 {

@@ -1,7 +1,8 @@
-﻿using moosik.api.ViewModels.Thread;
+﻿using System.Diagnostics.CodeAnalysis;
+using moosik.api.ViewModels.Thread;
 
 namespace moosik.api.ViewModels.User;
-
+[ExcludeFromCodeCoverage]
 public class UserDetailViewModel
 {
     public int Id { get; set; }
